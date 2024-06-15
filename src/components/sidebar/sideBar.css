@@ -1,36 +1,48 @@
 /* src/components/Sidebar.css */
 .sidebar {
-    width: 250px; /* Adjust width as needed */
-    height: 100%;
-    background-color: #333; /* Sidebar background color */
-    position: fixed;
-    left: 0;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px; /* Space at the top of the sidebar */
-  }
-  
-  .sidebar-nav {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar-nav li {
-    padding: 8px 16px;
-    text-align: center;
-  }
-  
-  .sidebar-nav li a {
-    color: white; /* Sidebar text color */
-    text-decoration: none;
-  }
-  
-  .sidebar-nav li a:hover {
-    background-color: #555; /* Hover background color */
-  }
-  
-  .sidebar-nav li a.active {
-    background-color: #4caf50; /* Active item background color */
-  }
-  
+  width: 260px; /* Adjust width as needed */
+  height: 100%;
+  background-color: #012970; /* Sidebar background color */
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px; /* Space at the top of the sidebar */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.sidebar img {
+  width: 200px; /* Adjust as needed */
+  height: 60px; /* Adjust as needed */
+  margin-top: -15px;
+  background-color: white;
+
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Ensure nav takes full width */
+}
+
+.sidebar-nav li {
+  padding: 8px 16px;
+  text-align: center;
+  color: white;
+}
+
+.sidebar-nav li a {
+  color: white; /* Sidebar text color */
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  background-color: #555; /* Hover background color */
+}
+
+.sidebar-nav li a.active {
+  background-color: #4caf50; /* Active item background color */
+}
