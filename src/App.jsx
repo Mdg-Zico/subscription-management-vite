@@ -1,36 +1,36 @@
 import React from 'react';
-
 import './App.css';
 import Dashboard from './views/Dashboard';
 import SubscricptionForm from './views/SubscricptionForm';
-import Logout from './views/Logout';
+import Login from './views/Login';
 import Sidebar from './components/sidebar/SideBar';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/header/Header';
 
 function App() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
   return (
-    <>
-    
-      <Router>
-  
-  
-        <Sidebar /> {/* Ensure Sidebar is rendered here */}
+    <Router>
+      <Header/>
+   
+      <div style={{ marginTop: "50px" }}>
+        {isLoggedIn && <Sidebar />} {/* Conditionally render the Sidebar */}
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/form" element={<SubscricptionForm />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          {!isLoggedIn ? (
+            <Route path="/login" element={<Login />} />
+          ) : (
+            <>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/form" element={<SubscricptionForm />} />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+            </>
+          )}
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </Router>
-    </>
+      </div>
+    </Router>
   );
 }
 

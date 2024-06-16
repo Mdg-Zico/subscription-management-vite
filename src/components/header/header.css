@@ -1,0 +1,19 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Match the sidebar width */
+    width: calc(100% - 200px); /* Subtract the sidebar width */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 13px 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    justify-content: space-between;
+    
+  }
+  
+  .header .img {
+    height: 40px;
+    margin-right: 20px;
+  }

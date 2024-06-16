@@ -1,31 +1,35 @@
 import React from 'react';
-import "../sidebar/sideBar.css"; // Ensure this CSS file exists and styles the sidebar correctly
-import logo from '../sidebar/aedc-logo.png'; // Import the image file
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartPie, faFileAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import "../sidebar/sideBar.css";
+import logo from '../sidebar/aedc-logo.png';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar" >
+    <div className="sidebar">
       <div>
-        <img
-          className="d-none d-lg-block"
-          src={logo}
-          alt="AEDC Logo"
-          style={{ width: '100%', marginBottom: '20px' }}
-        />
+        <img className="d-none d-lg-block" src={logo} alt="AEDC Logo" />
       </div>
       <ul className="sidebar-nav">
         <li className="active">
-          <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link to="/">
+            <FontAwesomeIcon icon={faChartPie} style={{ marginRight: '10px' }} />
             Dashboard
           </Link>
         </li>
         <li className="active">
-          <Link to="/form" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link to="/form">
+            <FontAwesomeIcon icon={faFileAlt} style={{ marginRight: '10px' }} />
             Subscription Form
           </Link>
         </li>
-        {/* Add more sidebar items as needed */}
+        <li className="active">
+          <Link to="/login">
+            <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
+            Log Out
+          </Link>
+        </li>
       </ul>
     </div>
   );
