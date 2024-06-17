@@ -1,12 +1,15 @@
-import React from 'react'
-import Sidebar from '../components/sidebar/SideBar'
-im
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function Logout() {
-  return (
-    <div>
-   
-    </div>
-  )
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.removeItem('isLoggedIn');
+    navigate('/login');
+  }, [navigate]);
+
+  return null;
 }
 
-export default Logout
+export default Logout;

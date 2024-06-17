@@ -25,7 +25,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="active">
-          <Link to="/login">
+          <Link to="/logout">
             <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
             Log Out
           </Link>

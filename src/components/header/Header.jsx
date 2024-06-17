@@ -25,7 +25,7 @@ function Header() {
       My Profile
     </Dropdown.Item>
     <Dropdown.Divider />
-    <Dropdown.Item href="#" onClick={(e) => e.preventDefault()}>
+    <Dropdown.Item href="/logout" onClick={(e) => e.preventDefault()}>
       Log Out
     </Dropdown.Item>
   </Dropdown.Menu>

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
+import './subscriptionStyle.css'
 
 function SubscriptionForm() {
-  // State to store form data
   const [formData, setFormData] = useState({
     subscriptionName: "",
     emails: "", // Single input for multiple emails
@@ -11,17 +10,12 @@ function SubscriptionForm() {
     description: ""
   });
 
-  // State to manage loading state
   const [loading, setLoading] = useState(false);
-
-  // State to manage submission status
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
-  // Function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Validation checks
     if (!formData.subscriptionName || !formData.emails || !formData.startDate || !formData.expiryDate || !formData.description) {
       setSubmissionStatus("Please fill out all required fields.");
       return;
@@ -32,19 +26,16 @@ function SubscriptionForm() {
       return;
     }
 
-    setLoading(true); // Set loading state to true while form is being submitted
-    const url = 'https://dummy.restapiexample.com/api/v1/create'; // URL to post form data
+    setLoading(true);
+    const url = 'https://dummy.restapiexample.com/api/v1/create';
 
-    // Process emails input into a space-separated string
     const emailsString = formData.emails.split(',').map(email => email.trim()).join(' ');
 
-    // Create payload including the space-separated emails string
     const payload = {
       ...formData,
       emails: emailsString
     };
 
-    // Log the form data before submission
     console.log("Form Data:", payload);
 
     fetch(url, {
@@ -56,7 +47,6 @@ function SubscriptionForm() {
     })
       .then(response => response.json())
       .then(data => {
-        // Log the response from the server
         console.log("Response Data:", data);
         if (data.status === "success") {
           setSubmissionStatus("success");
@@ -76,11 +66,10 @@ function SubscriptionForm() {
         setSubmissionStatus("error");
       })
       .finally(() => {
-        setLoading(false); // Set loading state back to false after form submission
+        setLoading(false);
       });
   };
 
-  // Function to handle form input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -97,105 +86,87 @@ function SubscriptionForm() {
           {submissionStatus === "success" ? "Form submitted successfully" : submissionStatus}
         </div>
       )}
-      <Container fluid >
-        <Row className="justify-content-center">
-          <Col md="12">
-            <Card style={{ }}>
-              <Card.Header style={{ backgroundColor: "#012970", color: "white", fontFamily: "Roboto, sans-serif", padding: "15px 20px" }}>
-                <Card.Title as="h4" style={{ color: "white", margin: "0" }}>Subscription Form</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Form onSubmit={handleSubmit}>
-                  <Row>
-                    <Col md="6">
-                      <Form.Group>
-                        <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Name</label>
-                        <Form.Control
-                          placeholder="Subscription"
-                          type="text"
-                          name="subscriptionName"
-                          value={formData.subscriptionName}
-                          onChange={handleInputChange}
-                          style={{ fontFamily: "Roboto, sans-serif" }}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col md="6">
-                      <Form.Group>
-                        <label htmlFor="exampleInputEmail1" style={{ fontFamily: "Roboto, sans-serif" }}>
-                          Stakeholder Email Addresses (comma-separated)
-                        </label>
-                        <Form.Control
-                          placeholder="Emails"
-                          type="text"
-                          name="emails"
-                          value={formData.emails}
-                          onChange={handleInputChange}
-                          style={{ fontFamily: "Roboto, sans-serif" }}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="6">
-                      <Form.Group>
-                        <label style={{ fontFamily: "Roboto, sans-serif" }}>Start Date</label>
-                        <Form.Control
-                          type="datetime-local"
-                          id="start-date"
-                          name="startDate"
-                          value={formData.startDate}
-                          onChange={handleInputChange}
-                          style={{ fontFamily: "Roboto, sans-serif" }}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col md="6">
-                      <Form.Group>
-                        <label style={{ fontFamily: "Roboto, sans-serif" }}>Expiry Date</label>
-                        <Form.Control
-                          type="datetime-local"
-                          id="expiry-date"
-                          name="expiryDate"
-                          value={formData.expiryDate}
-                          onChange={handleInputChange}
-                          style={{ fontFamily: "Roboto, sans-serif" }}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <Form.Group>
-                        <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Description</label>
-                        <Form.Control
-                          cols="80"
-                          placeholder="Here can be your description"
-                          rows="4"
-                          as="textarea"
-                          name="description"
-                          value={formData.description}
-                          onChange={handleInputChange}
-                          style={{ fontFamily: "Roboto, sans-serif" }}
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Button
-                    className="btn-fill pull-right"
+      <div className="container" style={{marginLeft: "180px", width: "90%", textAlign: "left"}}>
+        <div className="row justify-content-center">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-header" style={{ backgroundColor: "#012970", color: "white", fontFamily: "Roboto, sans-serif", padding: "15px 20px" }}>
+                <h4 className="card-title" style={{ color: "white", margin: "0" }}>Subscription Form</h4>
+              </div>
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div style={{ display: "flex", gap: "1rem" }}>
+                    <div className="form-group" style={{ flex: "1" }}>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Name</label>
+                      <input
+                        placeholder="Subscription"
+                        type="text"
+                        name="subscriptionName"
+                        value={formData.subscriptionName}
+                        onChange={handleInputChange}
+                        style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                      />
+                    </div>
+                    <div className="form-group" style={{ flex: "1" }}>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Stakeholder Email Addresses (comma-separated)</label>
+                      <input
+                        placeholder="Emails"
+                        type="text"
+                        name="emails"
+                        value={formData.emails}
+                        onChange={handleInputChange}
+                        style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", gap: "1rem" }}>
+                    <div className="form-group" style={{ flex: "1" }}>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Start Date</label>
+                      <input
+                        type="datetime-local"
+                        id="start-date"
+                        name="startDate"
+                        value={formData.startDate}
+                        onChange={handleInputChange}
+                        style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                      />
+                    </div>
+                    <div className="form-group" style={{ flex: "1" }}>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Expiry Date</label>
+                      <input
+                        type="datetime-local"
+                        id="expiry-date"
+                        name="expiryDate"
+                        value={formData.expiryDate}
+                        onChange={handleInputChange}
+                        style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Description</label>
+                    <textarea
+                      placeholder="Here can be your description"
+                      rows="4"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                    ></textarea>
+                  </div>
+                  <button
                     type="submit"
-                    variant="info"
-                    style={{ backgroundColor: "#012970", border: "none", fontFamily: "Roboto, sans-serif" }}
+                    style={{ backgroundColor: "#012970", border: "none", fontFamily: "Roboto, sans-serif", color: "white", padding: "0.5rem 1rem", cursor: "pointer" }}
                   >
                     {loading ? "Submitting..." : "Submit"}
-                  </Button>
+                  </button>
                   <div className="clearfix"></div>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

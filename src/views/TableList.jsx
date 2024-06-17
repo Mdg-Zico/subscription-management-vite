@@ -114,9 +114,9 @@ function TableList({ setSubscriptionCounts }) {
       sortable: true,
       cell: row => (
         <div className="action-buttons">
-          <button className="btn-action btn-view btn-vie" onClick={() => handleView(row)}>View</button>
-          <button className="btn-action btn-edit btn-edi" onClick={() => handleEdit(row)}>Edit</button>
-          <button className="btn-action btn-delete btn-delet" onClick={() => handleDelete(row.id)}>Delete</button>
+          <span className="action-link view" onClick={() => handleView(row)}>View</span>
+          <span className="action-link edit" onClick={() => handleEdit(row)}>Edit</span>
+          <span className="action-link delete" onClick={() => handleDelete(row.id)}>Delete</span>
         </div>
       )
     }
@@ -153,16 +153,16 @@ function TableList({ setSubscriptionCounts }) {
 
   return (
     <div className="table-container">
-      <div >
+      <div>
         <h4 className='table-header'>Subscription List</h4>
         <div className="search-box">
-        <input
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={handleSearch}
-          className="search-input"
-        />
+          <input
+            type="text"
+            placeholder="Search"
+            value={search}
+            onChange={handleSearch}
+            className="search-input"
+          />
         </div>
       </div>
       <DataTable
