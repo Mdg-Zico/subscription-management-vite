@@ -25,11 +25,12 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="active">
-          <Link to="/logout">
+          <Link to="/login">
             <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
             Log Out
           </Link>
         </li>
+       
       </ul>
     </div>
   );
