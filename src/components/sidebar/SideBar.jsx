@@ -13,7 +13,7 @@ const Sidebar = () => {
       </div>
       <ul className="sidebar-nav">
         <li className="active">
-          <Link to="/">
+          <Link to="/dashboard">
             <FontAwesomeIcon icon={faChartPie} style={{ marginRight: '10px' }} />
             Dashboard
           </Link>

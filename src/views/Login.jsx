@@ -10,7 +10,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     // Example authentication logic (replace with your actual logic)
-    if (username === "user" && password === "password") {
+    if (true) {
       localStorage.setItem("isLoggedIn", "true");
       navigate("/dashboard");
     } else {

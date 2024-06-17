@@ -57,6 +57,10 @@ function SubscriptionForm() {
             expiryDate: "",
             description: ""
           });
+           // Reload the page after 2 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
         } else {
           setSubmissionStatus("error");
         }

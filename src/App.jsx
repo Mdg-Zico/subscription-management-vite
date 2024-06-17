@@ -29,28 +29,26 @@ function LoadingSpinner() {
 function AppContent() {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track user login state
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // Initialize isLoggedIn from localStorage
+    return JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+  });
 
   useEffect(() => {
-    // Simulate async behavior (e.g., checking auth state)
     setTimeout(() => {
-      setIsLoading(false); // Set loading to false after simulating async behavior
-      // Assume authentication logic here; set isLoggedIn based on actual authentication status
-      // For demo purposes, assuming user is logged in after 1 second
+      setIsLoading(false);
+      // Simulate setting isLoggedIn to true after login
       setIsLoggedIn(true);
-    }, 1000); // Adjust timeout as needed
+      // Store isLoggedIn in localStorage
+      localStorage.setItem('isLoggedIn', JSON.stringify(true));
+    }, 1000);
   }, []);
 
-  if (isLoading) {
-    
-  }
-
-  // Redirect to login if user is not logged in
+  
   if (!isLoggedIn && location.pathname !== '/login') {
     return <Navigate to="/login" />;
   }
 
-  // Render only when isLoggedIn is true and not on the login page
   return (
     <>
       {isLoggedIn && location.pathname !== '/login' && <Header />}
@@ -60,7 +58,6 @@ function AppContent() {
         </div>
       )}
       <Routes>
-        
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/dashboard" element={<Dashboard />} />
