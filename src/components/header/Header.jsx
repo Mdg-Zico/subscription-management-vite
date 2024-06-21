@@ -4,6 +4,8 @@ import logo from '../header/aedc-logo.png';
 import { Dropdown } from 'react-bootstrap';
 
 function Header() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user.email);
   return (
     <div className='header'>
     <div style={{display: "flex", alignItems:"center"}}>
@@ -16,7 +18,7 @@ function Header() {
       <Dropdown style={{marginRight: "40px"}}>
   <Dropdown.Toggle variant="default" id="dropdown-basic">
     <span style={{ color: '#012970' }} className="no-icon">
-      Isaac.Medugu@abujaelectricity.com
+      {user.email}
     </span>
   </Dropdown.Toggle>
 
