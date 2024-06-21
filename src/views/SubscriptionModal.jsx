@@ -56,6 +56,7 @@ const buttonStyles = {
 };
 
 function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
+  console.log(formData.expiry_date);
   return (
     <Modal
       show={show}
@@ -80,7 +81,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                   placeholder="Subscription"
                   type="text"
                   name="subscriptionName"
-                  value={formData.subscriptionName}
+                  value={formData.subscription_name}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   style={inputStyles}
@@ -89,12 +90,12 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
             </Col>
             <Col md={6}>
               <Form.Group>
-                <label style={labelStyles}>Stakeholder Email Addresses</label>
+                <label style={labelStyles}>Stakeholder Emails</label>
                 <Form.Control
                   placeholder="Emails"
                   type="text"
                   name="emails"
-                  value={formData.emails}
+                  value={formData.users}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   style={inputStyles}
@@ -107,9 +108,9 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
               <Form.Group>
                 <label style={labelStyles}>Start Date</label>
                 <Form.Control
-                  type="datetime-local"
+                  type="datetime"
                   name="startDate"
-                  value={formData.startDate}
+                  value={formData.start_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   style={inputStyles}
@@ -120,9 +121,9 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
               <Form.Group>
                 <label style={labelStyles}>Expiry Date</label>
                 <Form.Control
-                  type="datetime-local"
+                  type="datetime"
                   name="expiryDate"
-                  value={formData.expiryDate}
+                  value={formData.expiry_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   style={inputStyles}
