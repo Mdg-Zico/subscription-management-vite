@@ -6,6 +6,7 @@
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
+      
     }
     
   
@@ -133,6 +134,7 @@
 
 .view {
   background-color: #007bff; /* Blue for View */
+  margin-left: -35px;
 }
 
 .edit {

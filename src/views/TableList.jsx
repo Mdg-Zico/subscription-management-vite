@@ -8,8 +8,7 @@ const initialData = [
   { id: 2, subscriptionType: "Premium", startDate: "2022-06-15", expiryDate: "2023-06-15", status: "Expired" },
   { id: 3, subscriptionType: "Pro", startDate: "2023-03-20", expiryDate: "2024-03-20", status: "Active" },
   { id: 4, subscriptionType: "Basic", startDate: "2022-08-10", expiryDate: "2023-08-10", status: "Expired" },
-  { id: 5, subscriptionType: "Premium", startDate: "2023-11-01", expiryDate: "2024-11-01", status: "Inactive" },
-  { id: 6, subscriptionType: "Pro", startDate: "2023-05-05", expiryDate: "2024-05-05", status: "Active" }
+  { id: 5, subscriptionType: "Pro", startDate: "2023-05-05", expiryDate: "2024-05-05", status: "Active" }
 ];
 
 function TableList({ setSubscriptionCounts }) {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/img/aedc-logo.png'; // Ensure the path to your image is correct
 
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +44,8 @@ function Login() {
     }
   };*/
   return (
-    <div className="login-page">
+   
+    <div className="login-page gray-background" style={{ width:"100%", height:"150%"}}  >
       <div style={{ marginBottom: "20px", display: "flex"}}>
           <img
             className="d-none d-lg-block"
@@ -51,7 +53,7 @@ function Login() {
             src={logo}
             alt="AEDC Logo"
           />
-          <p style={{ fontFamily: "OpenSans", fontSize: "15px", fontWeight: "bold", margin: 0, color: "darkblue" }}>Subscription Management System</p>
+          <p style={{ fontFamily: "OpenSans", fontSize: "15px", fontWeight: "bold",margin: "0", marginTop: "1px", color: "darkblue" }}>Subscription Management System</p>
         </div>
       <div className="login-container" style={{ width: "100%", textAlign: "center", boxShadow: "0 0 10px rgba(0, 0, 255, 0.5)", padding: "20px", borderRadius: "10px", backgroundColor: "#ffffff" }}>
         
@@ -59,7 +61,7 @@ function Login() {
         <p style={{ fontFamily: "openSans", marginBottom: "20px" }}>Please log in to continue</p>
         <form onSubmit={handleLogin} style={{ textAlign: "left" }}>
           <div className="form-group">
-            <label style={{ marginBottom: "5px", fontFamily: "OpenSans", fontWeight: "bolder" }}>username</label>
+            <label style={{ marginBottom: "5px", fontFamily: "OpenSans", fontWeight: "bolder" }}>Username</label>
             <input
               type="username"
               value={username}
@@ -82,6 +84,7 @@ function Login() {
         </form>
       </div>
     </div>
+
   );
 }
 
