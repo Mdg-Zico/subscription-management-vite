@@ -7,44 +7,44 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   // Example authentication logic (replace with your actual logic)
-  //   if (true) {
-  //     localStorage.setItem("isLoggedIn", "true");
-  //     navigate("/dashboard");
-  //   } else {
-  //     alert("Invalid username or password");
-  //   }
-  // };
-
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:5000/api/v1/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      localStorage.setItem("user", JSON.stringify(data));
-      setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
-      const user = localStorage.getItem('user');
-      console.log("User object", user);
+    // Example authentication logic (replace with your actual logic)
+    if (true) {
+      localStorage.setItem("isLoggedIn", "true");
       navigate("/dashboard");
-    } catch (error) {
-      console.error('Error logging in:', error);
-      setError("Failed to log in. Please check your credentials.");
+    } else {
+      alert("Invalid username or password");
     }
   };
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await fetch('http://localhost:5000/api/v1/users', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ username, password }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+  //     localStorage.setItem("user", JSON.stringify(data));
+  //     setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
+  //     const user = localStorage.getItem('user');
+  //     console.log("User object", user);
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     console.error('Error logging in:', error);
+  //     setError("Failed to log in. Please check your credentials.");
+  //   }
+  // };
 
   return (
     <div className="login-page">
