@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from "react";
 import DataTable from 'react-data-table-component';
 import SubscriptionModal from './SubscriptionModal';
+import axios from 'axios';
 import './tableList.css';
 
-const initialData = [
-  { id: 1, subscriptionType: "Basic", startDate: "2023-01-01", expiryDate: "2024-01-01", status: "Active" },
-  { id: 2, subscriptionType: "Premium", startDate: "2022-06-15", expiryDate: "2023-06-15", status: "Expired" },
-  { id: 3, subscriptionType: "Pro", startDate: "2023-03-20", expiryDate: "2024-03-20", status: "Active" },
-  { id: 4, subscriptionType: "Basic", startDate: "2022-08-10", expiryDate: "2023-08-10", status: "Expired" },
-  { id: 5, subscriptionType: "Pro", startDate: "2023-05-05", expiryDate: "2024-05-05", status: "Active" }
-];
-
 function TableList({ setSubscriptionCounts }) {
+  let initialData = [];
   const [search, setSearch] = useState("");
-  const [filteredData, setFilteredData] = useState(initialData);
+  const [filteredData, setFilteredData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
 
   useEffect(() => {
-    const counts = initialData.reduce(
-      (acc, item) => {
-        acc[item.status] = (acc[item.status] || 0) + 1;
-        return acc;
-      },
-      { Active: 0, Inactive: 0, Expired: 0 }
-    );
-    setSubscriptionCounts(counts);
+    axios.get('http://localhost:5000/api/v1/subscriptions')
+    .then(res => {
+      // console.log("Result data", res.data);
+      let counter = 1;
+      initialData = res.data;
+      for (let row of initialData) {
+        row['id'] = counter;
+        counter++;
+      }
+      const counts = initialData.reduce(
+        (acc, item) => {
+          item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
+          return acc;
+        },
+        { Active: 0, Expired: 0 }
+      );
+      // console.log(counts);
+      setSubscriptionCounts(counts);
+      setFilteredData(initialData);
+    })
   }, [setSubscriptionCounts]);
+  // console.log("Initial Data", initialData);
 
   const handleSearch = event => {
     const value = event.target.value.toLowerCase();
@@ -35,14 +42,15 @@ function TableList({ setSubscriptionCounts }) {
 
     const filtered = initialData.filter(item => {
       return (
-        item.subscriptionType.toLowerCase().includes(value) ||
-        item.startDate.toLowerCase().includes(value) ||
-        item.expiryDate.toLowerCase().includes(value) ||
-        item.status.toLowerCase().includes(value)
+        item.subscription_name.toLowerCase().includes(value) ||
+        item.start_date.toLowerCase().includes(value) ||
+        item.expiry_date.toLowerCase().includes(value) ||
+        item.subscription_status.toLowerCase().includes(value)
       );
     });
 
     setFilteredData(filtered);
+    console.log(filteredData);
   };
 
   const handleView = (row) => {
@@ -66,10 +74,10 @@ function TableList({ setSubscriptionCounts }) {
     setFilteredData(reassignedData);
     const counts = reassignedData.reduce(
       (acc, item) => {
-        acc[item.status] = (acc[item.status] || 0) + 1;
+        item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
         return acc;
       },
-      { Active: 0, Inactive: 0, Expired: 0 }
+      { Active: 0, Expired: 0 }
     );
     setSubscriptionCounts(counts);
   };
@@ -95,16 +103,16 @@ function TableList({ setSubscriptionCounts }) {
 
   const columns = [
     { name: 'ID', selector: row => row.id, sortable: true },
-    { name: 'Subscription Name', selector: row => row.subscriptionType, sortable: true },
-    { name: 'Start Date', selector: row => row.startDate, sortable: true },
-    { name: 'Expiry Date', selector: row => row.expiryDate, sortable: true },
+    { name: 'Subscription Name', selector: row => row.subscription_name, sortable: true },
+    { name: 'Start Date', selector: row => row.start_date, sortable: true },
+    { name: 'Expiry Date', selector: row => row.expiry_date, sortable: true },
     { 
       name: 'Status', 
       selector: row => row.status, 
       sortable: true,
       cell: row => (
-        <span className={`status-badge ${row.status.toLowerCase()}`}>
-          {row.status}
+        <span className={`status-badge ${row.subscription_status}`}>
+          {row.subscription_status ? 'Active' : 'Expired'}
         </span>
       ) 
     },
@@ -120,6 +128,7 @@ function TableList({ setSubscriptionCounts }) {
       )
     }
   ];
+  // console.log(columns);
 
   const customStyles = {
     headCells: {
@@ -150,10 +159,6 @@ function TableList({ setSubscriptionCounts }) {
     },
   };
 
-  const noDataMessage = (
-    <span className="text-center">No data available</span>
-  );
-
   return (
     <div className="table-container">
       <div>
@@ -176,7 +181,6 @@ function TableList({ setSubscriptionCounts }) {
         paginationRowsPerPageOptions={[10, 20, 30, 50]}
         customStyles={customStyles}
         highlightOnHover
-        noDataComponent={noDataMessage}
       />
       {currentRow && (
         <SubscriptionModal
