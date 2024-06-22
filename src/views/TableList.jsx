@@ -150,6 +150,10 @@ function TableList({ setSubscriptionCounts }) {
     },
   };
 
+  const noDataMessage = (
+    <span className="text-center">No data available</span>
+  );
+
   return (
     <div className="table-container">
       <div>
@@ -172,6 +176,7 @@ function TableList({ setSubscriptionCounts }) {
         paginationRowsPerPageOptions={[10, 20, 30, 50]}
         customStyles={customStyles}
         highlightOnHover
+        noDataComponent={noDataMessage}
       />
       {currentRow && (
         <SubscriptionModal
