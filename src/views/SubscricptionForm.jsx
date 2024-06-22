@@ -10,6 +10,8 @@ function SubscriptionForm() {
     description: ""
   });
 
+  const user = JSON.parse(localStorage.getItem('user'))
+
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
@@ -27,7 +29,7 @@ function SubscriptionForm() {
     }
 
     setLoading(true);
-    const url = 'https://dummy.restapiexample.com/api/v1/create';
+    const url = `http://localhost:5000/api/v1/subscriptions/${user.id}`;
 
     const emailsString = formData.emails.split(',').map(email => email.trim()).join(' ');
 
