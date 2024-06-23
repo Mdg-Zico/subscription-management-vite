@@ -37,7 +37,7 @@ function Login() {
       setShowSuccessModal(true);
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000); // Redirect after 2 seconds
+      }, 1000); // Redirect after 2 seconds
     } else {
       setError("Incorrect Username/Password");
     }
@@ -122,7 +122,7 @@ function Login() {
             <div className="success-icon" style={successIconStyle}>
               ✓
             </div>
-            <p style={{fontFamily:'cursive', marginTop: '10px', fontSize: "20px" }}>Login Successful</p>
+            <p style={{color: "#012970", fontFamily:'cursive', marginTop: '10px', fontSize: "20px" }}>Login Successful</p>
           </div>
         </div>
       )}
@@ -154,13 +154,14 @@ const modalContentStyle = {
   borderRadius: '10px',
   textAlign: 'center',
   width:"250px",
-  height: "250px"
+  height: "250px",
+  boxShadow:"#012970"
 };
 
 const successIconStyle = {
   width: '70px',
   height: '70px',
-  backgroundColor: 'green',
+  backgroundColor: '#012970',
   borderRadius: '50%',
   display: 'flex',
   justifyContent: 'center',
