@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './subscriptionStyle.css'
+import Sidebar from "../components/sidebar/SideBar";
 
 function SubscriptionForm() {
   const [formData, setFormData] = useState({
@@ -92,7 +93,9 @@ function SubscriptionForm() {
           {submissionStatus === "success" ? "Form submitted successfully" : submissionStatus}
         </div>
       )}
-      <div className="container" style={{marginLeft: "180px", width: "90%", textAlign: "left"}}>
+    <div className="main-content-wrapper">
+    
+      <div className="container" style={{marginLeft: "220px", width: "90%", textAlign: "left"}}>
         <div className="row justify-content-center">
           <div className="col-12">
             <div className="card">
@@ -173,6 +176,7 @@ function SubscriptionForm() {
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 }

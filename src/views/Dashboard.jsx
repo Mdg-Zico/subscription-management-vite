@@ -13,7 +13,7 @@ function Dashboard() {
       <div className="main-content">
         <Container fluid className="dashboard-container">
           <div className="card-deck">
-            <Card className="card-stats card-status left-text custom-card-size" style={{ width: "500px" }}>
+            <Card className="card-stats card-status left-text custom-card-size" style={{ width: "500px", flexWrap: "wrap" }}>
               <Card.Body className="card-body">
                 <div>
                   <i style={{ fontSize: "20px", color: "#012970" }} className="fas fa-list-alt mr-3 icon-style"></i>

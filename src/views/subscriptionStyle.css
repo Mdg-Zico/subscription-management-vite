@@ -1,9 +1,10 @@
 /* General container settings */
 .container {
   width: 100%;
-
+ 
   display: flex;
   flex-wrap: wrap; /* Allows form elements to wrap on smaller screens */
+
 }
 
 body {
@@ -86,7 +87,7 @@ button {
 }
 
 /* Responsive adjustments */
-@media (max-width: 823px) {
+@media (max-width: 580px) {
   .container {
     margin-left: 0;
     width: 100%;
@@ -107,5 +108,22 @@ button {
   .form-group input{
     
   flex-wrap: wrap;
+  }
+  .container {
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; /* Allows form elements to wrap on smaller screens */
+    
+  }
+}
+@media (max-width: 1000px) {
+  .main-content-wrapper{
+    margin-left: -250px;
+    
+  }
+ 
+  .loading {
+   text-align: left;
   }
 }

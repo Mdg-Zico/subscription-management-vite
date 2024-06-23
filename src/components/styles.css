@@ -76,8 +76,18 @@ body {
 
   .main-content {
     margin-left: 0; /* No margin on small screens */
+   
     width: 100%; /* Take full width when sidebar is collapsed */
+    
   }
+ 
+}
+
+@media (max-width: 1000px){
+  .main-content-wrapper{
+    margin-left: -270px;
+  }
+ 
 }
 
 /* New CSS for main content */
@@ -93,7 +103,7 @@ body {
 }
 
 .card-body {
-  width: 270px;
+  width: 250px;
 }
 
 .icon-style {
@@ -119,11 +129,11 @@ body {
 
 .left-text {
   text-align: left;
+ 
 }
 
 .custom-card-size {
   height: auto; /* Adjust height as needed */
 }
-.dashboard-container{
-  width: 300%;
-}
+
+
