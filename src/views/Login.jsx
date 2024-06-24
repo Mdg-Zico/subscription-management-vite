@@ -25,51 +25,51 @@ function Login() {
       return;
     }
 
-    // Default credentials for testing
-    const defaultUsername = "testUser";
-    const defaultPassword = "testPass";
+  //   // Default credentials for testing
+  //   const defaultUsername = "testUser";
+  //   const defaultPassword = "testPass";
 
-    if (username === defaultUsername && password === defaultPassword) {
-      // Simulate a successful login
-      const data = { username }; // You can add more user data here if needed
-      localStorage.setItem("user", JSON.stringify(data));
-      setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
-      setShowSuccessModal(true);
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000); // Redirect after 2 seconds
-    } else {
-      setError("Incorrect Username/Password");
-    }
-  };
-//   try {
-  //     const response = await fetch('http://localhost:5000/api/v1/users', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Incorrect Username/Password');
-  //     }
-
-  //     const data = await response.json();
+  //   if (username === defaultUsername && password === defaultPassword) {
+  //     // Simulate a successful login
+  //     const data = { username }; // You can add more user data here if needed
   //     localStorage.setItem("user", JSON.stringify(data));
   //     setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
   //     setShowSuccessModal(true);
   //     setTimeout(() => {
   //       navigate("/dashboard");
-  //     }, 2000); // Redirect after 2 seconds
-  //   } catch (error) {
-  //     if (error.message === 'Incorrect Username/Password') {
-  //       setError("Incorrect Username/Password");
-  //     } else {
-  //       setError("Network error. Please try again later.");
-  //     }
+  //     }, 1000); // Redirect after 2 seconds
+  //   } else {
+  //     setError("Incorrect Username/Password");
   //   }
   // };
+  try {
+      const response = await fetch('http://localhost:5000/api/v1/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Incorrect Username/Password');
+      }
+
+      const data = await response.json();
+      localStorage.setItem("user", JSON.stringify(data));
+      setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000); // Redirect after 2 seconds
+    } catch (error) {
+      if (error.message === 'Incorrect Username/Password') {
+        setError("Incorrect Username/Password");
+      } else {
+        setError("Network error. Please try again later.");
+      }
+    }
+  };
 
 
 
