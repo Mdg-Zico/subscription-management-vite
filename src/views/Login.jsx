@@ -49,6 +49,7 @@ function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -56,8 +57,9 @@ function Login() {
       }
 
       const data = await response.json();
-      localStorage.setItem("user", JSON.stringify(data));
-      setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
+      console.log(data);
+      localStorage.setItem("user", JSON.stringify(data['user']));
+      // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
       setShowSuccessModal(true);
       setTimeout(() => {
         navigate("/dashboard");
