@@ -4,7 +4,7 @@ import SubscriptionModal from './SubscriptionModal';
 import axios from 'axios';
 import './tableList.css';
 
-function TableList({ setSubscriptionCounts }) {
+function TableList({ setSubscriptionCounts, showActions }) {
   let initialData = [{ id: 1, subscription_name: "Basic", startDate: "2023-01-01", expiryDate: "2024-01-01", status: "Active", subscription_cost: "#2,000" }];
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -14,12 +14,14 @@ function TableList({ setSubscriptionCounts }) {
   console.log(initialData)
   useEffect(() => {
     axios.get('http://localhost:5000/api/v1/subscriptions')
+    
     .then(res => {
       // console.log("Result data", res.data);
       let counter = 1;
       initialData = res.data;
       for (let row of initialData) {
         row['id'] = counter;
+          console.log(counter);
         counter++;
       }
       const counts = initialData.reduce(
@@ -125,8 +127,12 @@ function TableList({ setSubscriptionCounts }) {
       cell: row => (
         <div className="action-buttons">
           <span className="action-link view" onClick={() => handleView(row)}>View</span>
-          <span className="action-link edit" onClick={() => handleEdit(row)}>Edit</span>
-          <span className="action-link delete" onClick={() => handleDelete(row.id)}>Delete</span>
+          {showActions && (
+            <>
+              <span className="action-link edit" onClick={() => handleEdit(row)}>Edit</span>
+              <span className="action-link delete" onClick={() => handleDelete(row.id)}>Delete</span>
+            </>
+          )}
         </div>
       )
     }
