@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './subscriptionStyle.css'
+import Sidebar from "../components/sidebar/SideBar";
 
 function SubscriptionForm() {
   const [formData, setFormData] = useState({
@@ -7,7 +8,8 @@ function SubscriptionForm() {
     emails: "", // Single input for multiple emails
     startDate: "",
     expiryDate: "",
-    description: ""
+    description: "",
+    subscriptionCost: ""
   });
 
   const user = JSON.parse(localStorage.getItem('user'))
@@ -20,7 +22,7 @@ function SubscriptionForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!formData.subscriptionName || !formData.emails || !formData.startDate || !formData.expiryDate || !formData.description) {
+    if (!formData.subscriptionName || !formData.emails || !formData.startDate || !formData.expiryDate || !formData.description || !formData.subscriptionCost) {
       setSubmissionStatus("Please fill out all required fields.");
       return;
     }
@@ -59,7 +61,8 @@ function SubscriptionForm() {
             emails: "",
             startDate: "",
             expiryDate: "",
-            description: ""
+            description: "",
+            subscriptionCost: ""
           });
            // Reload the page after 2 seconds
         setTimeout(() => {
@@ -94,7 +97,9 @@ function SubscriptionForm() {
           {submissionStatus === "success" ? "Form submitted successfully" : submissionStatus}
         </div>
       )}
-      <div className="container" style={{marginLeft: "180px", width: "90%", textAlign: "left"}}>
+    <div className="main-content-wrapper">
+    
+      <div className="container" style={{marginLeft: "220px", width: "90%", textAlign: "left"}}>
         <div className="row justify-content-center">
           <div className="col-12">
             <div className="card">
@@ -151,6 +156,17 @@ function SubscriptionForm() {
                       />
                     </div>
                   </div>
+                  <div className="form-group" style={{ flex: "1" }}>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Cost</label>
+                      <input
+                        placeholder="Subscription Cost"
+                        type="number"
+                        name="subscriptionCost"
+                        value={formData.subscriptionCost}
+                        onChange={handleInputChange}
+                        style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
+                      />
+                    </div>
                   <div className="form-group">
                     <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Description</label>
                     <textarea
@@ -162,11 +178,13 @@ function SubscriptionForm() {
                       style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                     ></textarea>
                   </div>
+                 
                   <button
                     type="submit"
                     style={{ backgroundColor: "#012970", border: "none", fontFamily: "Roboto, sans-serif", color: "white", padding: "0.5rem 1rem", cursor: "pointer" }}
                   >
                     {loading ? "Submitting..." : "Submit"}
+                    
                   </button>
                   <div className="clearfix"></div>
                 </form>
@@ -175,6 +193,7 @@ function SubscriptionForm() {
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 }

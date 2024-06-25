@@ -5,13 +5,13 @@ import axios from 'axios';
 import './tableList.css';
 
 function TableList({ setSubscriptionCounts }) {
-  let initialData = [];
+  let initialData = [{ id: 1, subscription_name: "Basic", startDate: "2023-01-01", expiryDate: "2024-01-01", status: "Active", subscription_cost: "#2,000" }];
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
-
+  console.log(initialData)
   useEffect(() => {
     axios.get('http://localhost:5000/api/v1/subscriptions')
     .then(res => {
@@ -45,12 +45,14 @@ function TableList({ setSubscriptionCounts }) {
         item.subscription_name.toLowerCase().includes(value) ||
         item.start_date.toLowerCase().includes(value) ||
         item.expiry_date.toLowerCase().includes(value) ||
-        item.subscription_status.toLowerCase().includes(value)
+        item.subscription_status.toLowerCase().includes(value)||
+        item.subscription_cost.toLowerCase().includes(value)
       );
     });
 
     setFilteredData(filtered);
     console.log(filteredData);
+    
   };
 
   const handleView = (row) => {
@@ -106,6 +108,7 @@ function TableList({ setSubscriptionCounts }) {
     { name: 'Subscription Name', selector: row => row.subscription_name, sortable: true },
     { name: 'Start Date', selector: row => row.start_date, sortable: true },
     { name: 'Expiry Date', selector: row => row.expiry_date, sortable: true },
+    { name: 'Subscription Cost', selector: row => row.subscription_cost, sortable: true },
     { 
       name: 'Status', 
       selector: row => row.status, 

@@ -1,3 +1,7 @@
+html,body{
+  margin-top: 0;
+  padding: 0;
+}
 .header {
     position: fixed;
     top: 0;
@@ -16,4 +20,22 @@
   .header .img {
     height: 40px;
     margin-right: 20px;
+  }
+  @media (max-width: 823px) {
+    .header{
+      transform: translateX(-250px); /* Hide sidebar by moving it to the left */
+      width: 100%;
+    }
+    .img{
+      display: none;
+    }
+    .header h6{
+      display: none;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .header h6{
+      display: none;
+    }
   }

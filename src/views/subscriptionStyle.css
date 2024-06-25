@@ -1,7 +1,129 @@
 /* General container settings */
 .container {
-    width: 100%;
-    padding: 20px;
-  }
-  
+  width: 100%;
  
+  display: flex;
+  flex-wrap: wrap; /* Allows form elements to wrap on smaller screens */
+
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.card {
+  margin-top: 20px;
+  width: 100%;
+
+}
+
+.card-header {
+  background-color: #012970;
+  color: white;
+  font-family: "Roboto, sans-serif";
+  padding: 15px 20px;
+}
+
+.card-title {
+  color: white;
+  margin: 0;
+}
+
+.card-body {
+  padding: 20px;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-family: "Roboto, sans-serif";
+  flex-wrap: nowrap;
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: "Roboto, sans-serif";
+  width: 100%;
+  padding: 0.5rem;
+ 
+}
+
+button {
+  background-color: #012970;
+  border: none;
+  font-family: "Roboto, sans-serif";
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.loading {
+  font-family: "Roboto, sans-serif";
+  color: #012970;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submission-status {
+  font-family: "Roboto, sans-serif";
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submission-status.success {
+  color: green;
+}
+
+.submission-status.error {
+  color: red;
+}
+
+/* Responsive adjustments */
+@media (max-width: 580px) {
+  .container {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .sidebar {
+    transform: translateX(-250px);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .toggle-button {
+    display: flex;
+  }
+  .form-group input{
+    
+  flex-wrap: wrap;
+  }
+  .container {
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; /* Allows form elements to wrap on smaller screens */
+    
+  }
+}
+@media (max-width: 1000px) {
+  .main-content-wrapper{
+    margin-left: -250px;
+    
+  }
+ 
+  .loading {
+   text-align: left;
+  }
+}

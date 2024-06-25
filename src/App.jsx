@@ -16,15 +16,6 @@ function App() {
   );
 }
 
-function LoadingSpinner() {
-  return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  );
-}
 
 function AppContent() {
   const location = useLocation();
@@ -58,7 +49,7 @@ function AppContent() {
         </div>
       )}
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login  />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/form" element={<SubscriptionForm />} />

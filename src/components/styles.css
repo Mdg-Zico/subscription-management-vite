@@ -1,0 +1,139 @@
+/* Existing CSS */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; /* Adjust the width as needed */
+  background-color: #012970;
+  padding-top: 20px;
+  transition: transform 0.3s ease; /* Add transition for smooth sliding */
+  z-index: 1000;
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-nav li {
+  margin: 20px 15px;
+}
+
+.sidebar-nav li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.sidebar-nav li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar img {
+  width: 200px;
+  height: 60px;
+  margin-left: 25px;
+  margin-top: -15px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.toggle-button {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 2000;
+  background-color: #012970; /* Same background color as the sidebar */
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px; /* Add padding for better touch experience */
+}
+
+@media (max-width: 580px) {
+  .sidebar {
+    transform: translateX(-250px); /* Hide sidebar by moving it to the left */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Show sidebar by resetting transform */
+  }
+
+  .toggle-button {
+    display: flex; /* Show toggle button on small screens */
+  }
+
+  .main-content {
+    margin-left: 0; /* No margin on small screens */
+   
+    width: 100%; /* Take full width when sidebar is collapsed */
+    
+  }
+ 
+}
+
+@media (max-width: 1000px){
+  .main-content-wrapper{
+    margin-left: -270px;
+  }
+ 
+}
+
+/* New CSS for main content */
+.main-content {
+  margin-left: 250px; /* Adjust based on the sidebar width */
+  width: calc(100% - 250px);
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.open + .main-content {
+  margin-left: 0; /* No margin when sidebar is open */
+  width: 100%; /* Take full width when sidebar is open */
+}
+
+.card-body {
+  width: 250px;
+}
+
+.icon-style {
+  font-size: 2rem;
+  color: #1e3a5f;
+}
+
+.text-style {
+  font-size: 1rem;
+  color: #1e3a5f;
+  margin: 0;
+}
+
+.title-style {
+  font-size: 2rem;
+  color: #1e3a5f;
+}
+
+.card-footer {
+  background-color: white !important;
+  color: "#012970";
+}
+
+.left-text {
+  text-align: left;
+ 
+}
+
+.custom-card-size {
+  height: auto; /* Adjust height as needed */
+}
+
+
