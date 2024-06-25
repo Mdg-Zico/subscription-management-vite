@@ -15,6 +15,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
   useEffect(() => {
     axios.get('http://localhost:5000/api/v1/subscriptions')
     
+    
     .then(res => {
       // console.log("Result data", res.data);
       let counter = 1;
