@@ -4,7 +4,7 @@ import TableList from "./TableList";
 import Sidebar from "../components/sidebar/SideBar";
 import '../components/styles.css';
 
-function Dashboard() {
+function MySubscription() {
   const [subscriptionCounts, setSubscriptionCounts] = useState({ Active: 0, Inactive: 0, Expired: 0 });
 
   return (
@@ -63,11 +63,11 @@ function Dashboard() {
           </div>
 
           {/* TableList Component */}
-          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={false} />
+          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={true} />
         </Container>
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default MySubscription;

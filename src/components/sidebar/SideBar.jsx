@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, UseContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartPie, faFileAlt, faSignOutAlt, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faChartPie, faFileAlt, faSignOutAlt, faBars, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useUser } from '../UserContext'
 import '../styles.css';
 import logo from '../sidebar/aedc-logo.png';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUser();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -34,12 +36,23 @@ const Sidebar = () => {
               Subscription Form
             </Link>
           </li>
+         
           <li className="active">
             <Link to="/login">
-              <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
+              <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px', }} />
               Log Out
             </Link>
           </li>
+         
+          {user && user.role === 'admin' && (
+            <li className="active" >
+              <Link to="/my_subscription">
+                
+                <FontAwesomeIcon icon={faUserShield} style={{ marginRight: '10px' }} />
+                My Subscription
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className={`main-content ${isOpen ? 'sidebar-open' : ''}`}>
