@@ -7,12 +7,16 @@ import Sidebar from './components/sidebar/SideBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/header/Header';
+import MySubscription from './views/MySubscription';
+import { UserProvider } from './components/UserContext';
 
 function App() {
   return (
+  <UserProvider>
     <Router>
       <AppContent />
     </Router>
+  </UserProvider>
   );
 }
 
@@ -48,12 +52,15 @@ function AppContent() {
           <Sidebar />
         </div>
       )}
+
       <Routes>
         <Route path="/login" element={<Login  />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/form" element={<SubscriptionForm />} />
+        <Route path="/my_subscription" element={<MySubscription />} />
       </Routes>
+    
     </>
   );
 }
