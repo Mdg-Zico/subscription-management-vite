@@ -12,6 +12,8 @@ function SubscriptionForm() {
 
   const user = JSON.parse(localStorage.getItem('user'))
 
+  
+
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
