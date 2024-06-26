@@ -20,16 +20,13 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
-
-    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
-
     if (!username || !password) {
       setError("Enter Username and Password");
       return;
     }
 
     try {
-      const response = await fetch(`${ip_initials}/api/v1/users`, {
+      const response = await fetch(`${ip_initials}/api/v1/users/login`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

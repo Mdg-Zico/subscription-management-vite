@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './tableList.css';
 
-function TableList({ setSubscriptionCounts, showActions }) {
+function TableList({ setSubscriptionCounts, showActions, url }) {
   let initialData = [{ id: 1, subscription_name: "Basic", startDate: "2023-01-01", expiryDate: "2024-01-01", status: "Active", subscription_cost: "#2,000" }];
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -16,7 +16,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
   console.log(initialData)
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get('http://localhost:5000/api/v1/subscriptions',
+    axios.get(url,
       {headers: {
         "Authorization": `Bearer ${token}`, // mind the space before your token
         "x-access-token": token

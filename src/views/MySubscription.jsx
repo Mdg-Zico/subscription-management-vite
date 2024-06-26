@@ -3,6 +3,7 @@ import { Card, Container } from "react-bootstrap";
 import TableList from "./TableList";
 import Sidebar from "../components/sidebar/SideBar";
 import '../components/styles.css';
+import ip_initials from "./config";
 
 function MySubscription() {
   const [subscriptionCounts, setSubscriptionCounts] = useState({ Active: 0, Inactive: 0, Expired: 0 });
@@ -63,7 +64,7 @@ function MySubscription() {
           </div>
 
           {/* TableList Component */}
-          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={true} />
+          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={true} url={`${ip_initials}/api/v1/subscription/my_subscriptions`}/>
         </Container>
       </div>
     </div>

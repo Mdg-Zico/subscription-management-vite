@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Container } from "react-bootstrap";
 import TableList from "./TableList";
 import Sidebar from "../components/sidebar/SideBar";
+import ip_initials from './config';
 import '../components/styles.css';
 
 function Dashboard() {
@@ -63,7 +64,7 @@ function Dashboard() {
           </div>
 
           {/* TableList Component */}
-          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={false} />
+          <TableList setSubscriptionCounts={setSubscriptionCounts} showActions={false} url={`${ip_initials}/api/v1/subscriptions`} />
         </Container>
       </div>
     </div>
