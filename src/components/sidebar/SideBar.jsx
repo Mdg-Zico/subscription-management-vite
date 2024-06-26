@@ -1,8 +1,9 @@
-import React, { useState, UseContext } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartPie, faFileAlt, faSignOutAlt, faBars, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useUser } from '../UserContext'
+import { useUser } from '../UserContext';
+import { useDrag } from '@use-gesture/react'; // Import useDrag for gesture handling
 import '../styles.css';
 import logo from '../sidebar/aedc-logo.png';
 
@@ -14,15 +15,29 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
+  // Handle sliding gesture to close sidebar
+  const bind = useDrag(({ down, movement: [mx] }) => {
+    if (!down && mx < -50) {
+      setIsOpen(false);
+    }
+  });
+
   return (
     <div>
+      {/* Toggle button for opening and closing sidebar */}
       <button className="toggle-button" onClick={toggleSidebar}>
         <FontAwesomeIcon icon={faBars} />
       </button>
+      {/* Sidebar with conditional 'open' class for animation */}
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div>
           <img className="d-none d-lg-block" src={logo} alt="AEDC Logo" />
         </div>
+        {/* Sidebar navigation links */}
         <ul className="sidebar-nav">
           <li className="active">
             <Link to="/dashboard">
@@ -36,18 +51,15 @@ const Sidebar = () => {
               Subscription Form
             </Link>
           </li>
-         
           <li className="active">
             <Link to="/login">
-              <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px', }} />
+              <FontAwesomeIcon icon={faSignOutAlt} style={{ marginRight: '10px' }} />
               Log Out
             </Link>
           </li>
-         
           {user && user.role === 'admin' && (
-            <li className="active" >
+            <li className="active">
               <Link to="/my_subscription">
-                
                 <FontAwesomeIcon icon={faUserShield} style={{ marginRight: '10px' }} />
                 My Subscription
               </Link>
@@ -55,6 +67,9 @@ const Sidebar = () => {
           )}
         </ul>
       </div>
+      {/* Overlay to close sidebar when clicking on free space */}
+      {isOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
+      {/* Main content area */}
       <div className={`main-content ${isOpen ? 'sidebar-open' : ''}`}>
         {/* Your main content here */}
       </div>

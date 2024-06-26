@@ -21,21 +21,25 @@ html,body{
     height: 40px;
     margin-right: 20px;
   }
-  @media (max-width: 823px) {
+  @media (max-width: 1000px) {
     .header{
       transform: translateX(-250px); /* Hide sidebar by moving it to the left */
       width: 100%;
     }
     .img{
-      display: none;
+      margin-left: 40px
     }
+   
+  }
+
+  @media(max-width: 800px){
+    /* .img{
+      display: none;
+     
+    } */
     .header h6{
       display: none;
     }
   }
 
-  @media (max-width: 1000px) {
-    .header h6{
-      display: none;
-    }
-  }
+ 

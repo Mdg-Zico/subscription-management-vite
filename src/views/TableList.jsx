@@ -28,7 +28,9 @@ function TableList({ setSubscriptionCounts, showActions }) {
       for (let row of initialData) {
         row['id'] = counter;
         counter++;
+        
       }
+      
       const counts = initialData.reduce(
         (acc, item) => {
           item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
