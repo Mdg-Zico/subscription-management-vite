@@ -41,7 +41,7 @@
    
   }
   
-  .status-badge.active {
+  .status-badge.true {
     background-color: green;
   }
   
@@ -49,7 +49,7 @@
     background-color: gray;
   }
   
-  .status-badge.expired {
+  .status-badge.false {
     background-color: red;
   }
   

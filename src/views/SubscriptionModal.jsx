@@ -139,7 +139,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                   as="textarea"
                   rows="4"
                   name="description"
-                  value={formData.description}
+                  value={formData.subscription_description}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   style={inputStyles}

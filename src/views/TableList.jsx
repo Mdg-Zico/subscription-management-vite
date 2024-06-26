@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from 'react-data-table-component';
 import SubscriptionModal from './SubscriptionModal';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './tableList.css';
 
@@ -11,18 +12,21 @@ function TableList({ setSubscriptionCounts, showActions }) {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
+  const navigate = useNavigate();
   console.log(initialData)
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/subscriptions')
-    
-    
+    const token = localStorage.getItem('token');
+    axios.get('http://localhost:5000/api/v1/subscriptions',
+      {headers: {
+        "Authorization": `Bearer ${token}`, // mind the space before your token
+        "x-access-token": token
+      }})
     .then(res => {
-      // console.log("Result data", res.data);
+      console.log("Result data", res.data);
       let counter = 1;
       initialData = res.data;
       for (let row of initialData) {
         row['id'] = counter;
-          console.log(counter);
         counter++;
       }
       const counts = initialData.reduce(
@@ -36,8 +40,15 @@ function TableList({ setSubscriptionCounts, showActions }) {
       setSubscriptionCounts(counts);
       setFilteredData(initialData);
     })
+    .catch(
+      error => {
+        if (error.response.status === 401) {
+          navigate("/login")
+        }
+      }
+    )
   }, [setSubscriptionCounts]);
-  // console.log("Initial Data", initialData);
+  console.log("Initial Data", initialData);
 
   const handleSearch = event => {
     const value = event.target.value.toLowerCase();
@@ -48,13 +59,14 @@ function TableList({ setSubscriptionCounts, showActions }) {
         item.subscription_name.toLowerCase().includes(value) ||
         item.start_date.toLowerCase().includes(value) ||
         item.expiry_date.toLowerCase().includes(value) ||
-        item.subscription_status.toLowerCase().includes(value)||
-        item.subscription_cost.toLowerCase().includes(value)
+        item.subscription_status.toLowerCase().includes(value) ||
+        item.subscription_cost.toLowerCase().includes(value) ||
+        item.subscription_description.toLowerCase().includes(value)
       );
     });
 
     setFilteredData(filtered);
-    console.log(filteredData);
+    // console.log(filteredData);
     
   };
 

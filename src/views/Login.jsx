@@ -29,12 +29,10 @@ function Login() {
     }
 
     try {
-      const response = await fetch(`${ip_initials}/api/v1/users/login`, {
+      const response = await fetch(`${ip_initials}/api/v1/users`, {
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${token}`, // mind the space before your token
           "Content-Type": "application/json",
-          "x-access-token": token,
         },
         body: JSON.stringify({ username, password }),
         credentials: 'include'
@@ -47,6 +45,7 @@ function Login() {
       const data = await response.json();
       console.log(data);
       localStorage.setItem("user", JSON.stringify(data['user']));
+      localStorage.setItem("token", data['token']);
       // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
       setShowSuccessModal(true);
       setTimeout(() => {
