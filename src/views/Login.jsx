@@ -20,61 +20,45 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
-        // Default credentials for testing
-    const defaultUsername = "testUser";
-    const defaultPassword = "testPass";
 
-    if (username === defaultUsername && password === defaultPassword) {
-      // Simulate a successful login
-      const data = { username }; // You can add more user data here if needed
-      localStorage.setItem("user", JSON.stringify(data));
-      setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
+    const token = localStorage.getItem("token"); // Retrieve the token from localStorage
+
+    if (!username || !password) {
+      setError("Enter Username and Password");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${ip_initials}/api/v1/users/login`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: 'include'
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Incorrect Username/Password');
+      }
+     
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("user", JSON.stringify(data['user']));
+      localStorage.setItem("token", data['token']);
+      // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
       setShowSuccessModal(true);
       setTimeout(() => {
         navigate("/dashboard");
-      }, 1000); // Redirect after 2 seconds
-    } else {
-      setError("Incorrect Username/Password");
+      }, 2000); // Redirect after 2 seconds
+    } catch (error) {
+      if (error.message === 'Incorrect Username/Password') {
+        setError("Incorrect Username/Password");
+      } else {
+        setError("Network error. Please try again later.");
+      }
     }
- };
-  //   const token = localStorage.getItem("token"); // Retrieve the token from localStorage
-
-  //   if (!username || !password) {
-  //     setError("Enter Username and Password");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(`${ip_initials}/api/v1/users/login`, {
-  //       method: 'POST',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username, password }),
-  //       credentials: 'include'
-  //     });
-  //     console.log(response);
-  //     if (!response.ok) {
-  //       throw new Error('Incorrect Username/Password');
-  //     }
-     
-  //     const data = await response.json();
-  //     console.log(data);
-  //     localStorage.setItem("user", JSON.stringify(data['user']));
-  //     localStorage.setItem("token", data['token']);
-  //     // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
-  //     setShowSuccessModal(true);
-  //     setTimeout(() => {
-  //       navigate("/dashboard");
-  //     }, 2000); // Redirect after 2 seconds
-  //   } catch (error) {
-  //     if (error.message === 'Incorrect Username/Password') {
-  //       setError("Incorrect Username/Password");
-  //     } else {
-  //       setError("Network error. Please try again later.");
-  //     }
-  //   }
-  // };
+  };
 
   return (
     <div className="login-page gray-background" style={{ width: "100%", height: "100%", position: "relative" }}>
