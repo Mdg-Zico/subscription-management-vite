@@ -134,8 +134,9 @@
 
 .view {
   background-color: #007bff; /* Blue for View */
-  margin-left: -35px;
+  margin-left: 0 px;
 }
+
 
 .edit {
   background-color: #17a2b8; /* Green for Edit */

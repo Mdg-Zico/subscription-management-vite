@@ -14,10 +14,9 @@ body {
 }
 
 
-
 .card {
   margin-top: 20px;
-  width: 100%;
+  width: 110%;
 
 }
 
@@ -39,9 +38,36 @@ body {
 }
 
 .form-group {
+
   margin-bottom: 1rem;
+
 }
 
+/* subscriptionStyle.css */
+
+/* Set height for AsyncSelect and textarea */
+.css-13cymwt-control,
+textarea, input {
+  height: 45px; /* Adjust this value as needed */
+}
+.css-1u9des2-indicatorSeparator{
+visibility: hidden;
+}
+.css-1jqq78o-placeholder, .css-1xc3v61-indicatorContainer{
+  margin-top: -10px;
+}
+input:focus {
+  border-color: blue; /* Change this to your desired border color */
+  outline: none; /* Ensures no default focus outline */
+  
+  border-radius: 5px;
+}
+textarea:focus{
+  border-color: blue; /* Change this to your desired border color */
+  outline: none; /* Ensures no default focus outline */
+  
+  border-radius: 5px; 
+}
 .form-group label {
   font-family: "Roboto, sans-serif";
   flex-wrap: nowrap;
@@ -118,12 +144,37 @@ button {
   }
 }
 @media (max-width: 1000px) {
-  .main-content-wrapper{
-    margin-left: -250px;
+  .form-main-content{
+    margin-left: -200px;
     
   }
  
   .loading {
    text-align: left;
+  }
+}
+@media (min-width: 1001px) {
+  .form-main-content{
+    margin-left: 100px;
+    
+  }
+}
+@media (min-width: 700px) and (min-height: 1024px) {
+  .form-body{
+    margin-top: -400px;
+  }
+}
+.flex-input-divs{
+  display: flex;
+  gap: 1rem;
+}
+.flex-input-sub-divs{
+ flex: 1;
+}
+
+@media (max-width: 700px) {
+  .flex-input-divs,
+  .flex-input-sub-divs {
+    display: block; /* This will stack the inputs on individual lines */
   }
 }
