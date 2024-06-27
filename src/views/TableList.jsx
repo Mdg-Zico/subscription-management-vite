@@ -26,6 +26,7 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
       let counter = 1;
       initialData = res.data;
       for (let row of initialData) {
+        console.log("ROWS", row);
         row['id'] = counter;
         counter++;
       }
@@ -83,6 +84,7 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
   };
 
   const handleDelete = (id) => {
+    axios.delete()
     const updatedData = filteredData.filter(item => item.id !== id);
     const reassignedData = updatedData.map((item, index) => ({
       ...item,
@@ -150,7 +152,7 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
       )
     }
   ];
-  // console.log(columns);
+  console.log("COLUMNS", columns);
 
   const customStyles = {
     headCells: {
