@@ -80,7 +80,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <Form.Control
                   placeholder="Subscription"
                   type="text"
-                  name="subscriptionName"
+                  name="subscription_name"
                   value={formData.subscription_name}
                   onChange={handleInputChange}
                   disabled={!isEditing}
