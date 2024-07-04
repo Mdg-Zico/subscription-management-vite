@@ -3,6 +3,9 @@ import './subscriptionStyle.css';
 import Sidebar from "../components/sidebar/SideBar";
 import AsyncSelect from 'react-select/async';
 import { components } from 'react-select';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ip_initials from "./config";
 
 function SubscriptionForm() {
   const [formData, setFormData] = useState({
@@ -14,9 +17,11 @@ function SubscriptionForm() {
     subscription_cost: ""
   });
 
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
+  const token = localStorage.getItem('token');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -99,17 +104,29 @@ function SubscriptionForm() {
     });
   };
 
-  const loadOptions = (inputValue, callback) => {
+  const loadOptions = () => {
     // Replace with your API endpoint to fetch email suggestions
-    fetch(`http://localhost:5000/api/v1/users`)
-      .then(response => response.json())
+    console.log(token);
+    fetch(`${ip_initials}/users`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    })
+      .then(response => {
+        console.log(response.json())
+        console.log(response);
+      })
       .then(data => {
-        const options = data.map(email => ({ value: email, label: email }));
-        callback(options);
+        const options = data.map(user => ({ value: user.email, label: email }));
       })
       .catch(error => {
+        console.log("ERROR STATUS", error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
         console.error("Error fetching email suggestions:", error);
-        callback([]);
+        // callback([]);
       });
   };
 
