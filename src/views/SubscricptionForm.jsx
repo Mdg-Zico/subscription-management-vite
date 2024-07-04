@@ -26,13 +26,13 @@ function SubscriptionForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!formData.subscriptionName || formData.emails.length === 0 || !formData.startDate || !formData.expiryDate || !formData.description || !formData.subscriptionCost) {
+    if (!formData.subscription_name || formData.users.length === 0 || !formData.start_date || !formData. expiry_date || !formData.subscription_description || !formData.subscription_cost) {
       setSubmissionStatus({ message: "Please fill out all required fields.", type: "error" });
       scrollToTop();
       return;
     }
 
-    if (new Date(formData.expiryDate) < new Date(formData.startDate)) {
+    if (new Date(formData. expiry_date) < new Date(formData.start_date)) {
       setSubmissionStatus({ message: "Expiry date cannot be earlier than start date.", type: "error" });
       scrollToTop();
       return;
@@ -41,16 +41,16 @@ function SubscriptionForm() {
     setLoading(true);
     const url = `http://localhost:5000/api/v1/subscriptions`;
 
-    const emailsString = formData.emails.map(emailObj => emailObj.value).join(', ');
+    const usersString = formData.users.map(emailObj => emailObj.value).join(', ');
 
     const payload = {
       ...formData,
-      emails: emailsString
+      users: usersString
     };
 
     console.log("Form Data:", payload);
 
-    fetch(url, {
+    fetch(url,  {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,10 +97,10 @@ function SubscriptionForm() {
     });
   };
 
-  const handleEmailsChange = (selectedOptions) => {
+  const handleusersChange = (selectedOptions) => {
     setFormData({
       ...formData,
-      emails: selectedOptions
+      users: selectedOptions
     });
   };
 
@@ -160,8 +160,8 @@ function SubscriptionForm() {
                         <input
                           placeholder="Subscription"
                           type="text"
-                          name="subscriptionName"
-                          value={formData.subscriptionName}
+                          name="subscription_name"
+                          value={formData.subscription_name}
                           onChange={handleInputChange}
                           style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                         />
@@ -191,8 +191,8 @@ function SubscriptionForm() {
                         <input
                           type="datetime-local"
                           id="start-date"
-                          name="startDate"
-                          value={formData.startDate}
+                          name="start_date"
+                          value={formData.start_date}
                           onChange={handleInputChange}
                           style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                         />
@@ -202,8 +202,8 @@ function SubscriptionForm() {
                         <input
                           type="datetime-local"
                           id="expiry-date"
-                          name="expiryDate"
-                          value={formData.expiryDate}
+                          name=" expiry_date"
+                          value={formData. expiry_date}
                           onChange={handleInputChange}
                           style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                         />
@@ -222,12 +222,12 @@ function SubscriptionForm() {
                       />
                     </div>
                     <div className="form-group flex-input-sub-divs" >
-                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Description</label>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription subscription_description</label>
                       <textarea
-                        placeholder="Description"
+                        placeholder="subscription_description"
                         rows="1"
-                        name="description"
-                        value={formData.description}
+                        name="subscription_description"
+                        value={formData.subscription_description}
                         onChange={handleInputChange}
                         style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                       ></textarea>
