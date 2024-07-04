@@ -21,9 +21,10 @@ function Header() {
       </div>
       <div>
         <Dropdown style={{ marginRight: "40px" }}>
+        
           <Dropdown.Toggle variant="default" id="dropdown-basic">
             <span style={{ color: '#012970' }} className="no-icon">
-              {userEmail}
+            {userEmail}
             </span>
           </Dropdown.Toggle>
 

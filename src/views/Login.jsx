@@ -49,19 +49,21 @@ function Login() {
       // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
       setShowSuccessModal(true);
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/my_subscription");
       }, 2000); // Redirect after 2 seconds
     } catch (error) {
       if (error.message === 'Incorrect Username/Password') {
         setError("Incorrect Username/Password");
       } else {
-        setError("Network error. Please try again later.");
+        setError('Network error. Please try again later.');
       }
     }
   };
 
   return (
+    
     <div className="login-page gray-background" style={{ width: "100%", height: "100%", position: "relative" }}>
+   
       {!showSuccessModal && (
         <>
           <div style={{ marginBottom: "20px", display: "flex" }}>
@@ -71,15 +73,15 @@ function Login() {
               src={logo}
               alt="AEDC Logo"
             />
-            <p style={{ fontFamily: "OpenSans", fontSize: "15px", fontWeight: "bold", margin: "0", marginTop: "1px", color: "darkblue" }}>Subscription Management System</p>
+            <p style={{ fontFamily: "Roboto, OpenSans", fontSize: "15px", fontWeight: "bold", margin: "0", marginTop: "1px", color: "darkblue" }}>Subscription Management System</p>
           </div>
           <div className="login-container" style={{ width: "100%", textAlign: "center", boxShadow: "0 0 10px rgba(0, 0, 255, 0.5)", padding: "20px", borderRadius: "10px", backgroundColor: "#ffffff" }}>
             <h2 style={{ color: "darkblue", marginBottom: "10px" }}>Login</h2>
-            {error && <p style={{ color: "red", fontFamily: "OpenSans" }}>{error}</p>}
-            <p style={{ fontFamily: "OpenSans", marginBottom: "20px" }}>Please log in to continue</p>
+            {error && <p style={{ color: "red", fontFamily: "Roboto, OpenSans" }}>{error}</p>}
+            <p style={{ fontFamily: "Roboto, OpenSans", marginBottom: "20px" }}>Please log in to continue</p>
             <form onSubmit={handleLogin} style={{ textAlign: "left" }}>
               <div className="form-group">
-                <label style={{ marginBottom: "5px", fontFamily: "OpenSans", fontWeight: "bolder" }}>Username</label>
+                <label style={{ marginBottom: "5px", fontFamily: "Roboto, OpenSans", fontWeight: "bolder" }}>Username</label>
                 <input
                   type="text"
                   value={username}
@@ -89,7 +91,7 @@ function Login() {
                 />
               </div>
               <div className="form-group">
-                <label style={{ marginBottom: "5px", fontFamily: "OpenSans", fontWeight: "bolder" }}>Password</label>
+                <label style={{ marginBottom: "5px", fontFamily: "Roboto, OpenSans", fontWeight: "bolder" }}>Password</label>
                 <input
                   type="password"
                   value={password}
@@ -98,7 +100,7 @@ function Login() {
                   style={{ opacity: 0.7, borderRadius: "10px", border: "1px solid #ced4da", padding: "8px", width: "100%" }}
                 />
               </div>
-              <button type="submit" className="btn btn-primary" style={{ backgroundColor: "#0a58ca", color: "white", marginTop: "10px" }}>Login</button>
+              <button type="submit" className="btn btn-primary" style={{fontFamily: "Roboto, OpenSans", backgroundColor: "#0a58ca", color: "white", marginTop: "10px" }}>Login</button>
             </form>
           </div>
         </>

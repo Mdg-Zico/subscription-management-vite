@@ -40,7 +40,7 @@ const Sidebar = () => {
         {/* Sidebar navigation links */}
         <ul className="sidebar-nav">
           <li className="active">
-            <Link to="/dashboard">
+            <Link to="/my_subscription">
               <FontAwesomeIcon icon={faChartPie} style={{ marginRight: '10px' }} />
               Dashboard
             </Link>
@@ -57,14 +57,14 @@ const Sidebar = () => {
               Log Out
             </Link>
           </li>
-          {user && user.role === 'admin' && (
+          {/* {user && user.role === 'admin' && (
             <li className="active">
               <Link to="/my_subscription">
                 <FontAwesomeIcon icon={faUserShield} style={{ marginRight: '10px' }} />
                 My Subscription
               </Link>
             </li>
-          )}
+          )} */}
         </ul>
       </div>
       {/* Overlay to close sidebar when clicking on free space */}

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './subscriptionStyle.css';
-import Sidebar from "../components/sidebar/SideBar";
 import AsyncSelect from 'react-select/async';
-import { components } from 'react-select';
+
 
 function SubscriptionForm() {
   const [formData, setFormData] = useState({
@@ -18,16 +17,31 @@ function SubscriptionForm() {
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
+  const [emailOptions, setEmailOptions] = useState([]);
+
+  useEffect(() => {
+    // Fetch email addresses once and store them in the local state
+    fetch('http://localhost:5000/api/v1/users/email')
+      .then(response => response.json())
+      .then(data => {
+        const options = data.map(email => ({ value: email, label: email }));
+        setEmailOptions(options);
+      })
+      .catch(error => {
+        console.error("Error fetching email addresses:", error);
+      });
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!formData.subscription_name || formData.users.length === 0 || !formData.start_date || !formData. expiry_date || !formData.subscription_description || !formData.subscription_cost) {
+    if (!formData.subscription_name || formData.users.length === 0 || !formData.start_date || !formData.expiry_date || !formData.subscription_description || !formData.subscription_cost) {
       setSubmissionStatus({ message: "Please fill out all required fields.", type: "error" });
       scrollToTop();
       return;
     }
 
-    if (new Date(formData. expiry_date) < new Date(formData.start_date)) {
+    if (new Date(formData.expiry_date) < new Date(formData.start_date)) {
       setSubmissionStatus({ message: "Expiry date cannot be earlier than start date.", type: "error" });
       scrollToTop();
       return;
@@ -61,7 +75,7 @@ function SubscriptionForm() {
             subscription_name: "",
             users: [],
             start_date: "",
-             expiry_date: "",
+            expiry_date: "",
             subscription_description: "",
             subscription_cost: ""
           });
@@ -91,7 +105,7 @@ function SubscriptionForm() {
     });
   };
 
-  const handleusersChange = (selectedOptions) => {
+  const handleUsersChange = (selectedOptions) => {
     setFormData({
       ...formData,
       users: selectedOptions
@@ -99,18 +113,10 @@ function SubscriptionForm() {
   };
 
   const loadOptions = (inputValue, callback) => {
-    // Replace with your API endpoint to fetch email suggestions
-    fetch(`http://localhost:5000/api/v1/users?query=${inputValue}`)
-      .then(response => response.json())
-      .then(data => {
-        const options = data.map(email => ({ value: email, label: email }));
-        callback(options);
-      })
-      .catch(error => {
-        console.error("Error fetching email suggestions:", error);
-        
-        callback([]);
-      });
+    const filteredOptions = emailOptions.filter(option =>
+      option.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    callback(filteredOptions);
   };
 
   const scrollToTop = () => {
@@ -157,7 +163,7 @@ function SubscriptionForm() {
                           cacheOptions
                           defaultOptions
                           loadOptions={loadOptions}
-                          onChange={handleusersChange}
+                          onChange={handleUsersChange}
                           value={formData.users}
                           styles={{
                               fontFamily: "Roboto, sans-serif",
@@ -185,8 +191,8 @@ function SubscriptionForm() {
                         <input
                           type="datetime-local"
                           id="expiry-date"
-                          name=" expiry_date"
-                          value={formData. expiry_date}
+                          name="expiry_date"
+                          value={formData.expiry_date}
                           onChange={handleInputChange}
                           style={{ fontFamily: "Roboto, sans-serif", width: "100%", padding: "0.5rem" }}
                         />
@@ -205,9 +211,9 @@ function SubscriptionForm() {
                       />
                     </div>
                     <div className="form-group flex-input-sub-divs" >
-                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription subscription_description</label>
+                      <label style={{ fontFamily: "Roboto, sans-serif" }}>Subscription Description</label>
                       <textarea
-                        placeholder="subscription_description"
+                        placeholder="Description"
                         rows="1"
                         name="subscription_description"
                         value={formData.subscription_description}
