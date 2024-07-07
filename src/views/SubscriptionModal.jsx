@@ -106,7 +106,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
               <Form.Group>
                 <label style={labelStyles}>Start Date</label>
                 <Form.Control
-                  type="datetime"
+                   type="datetime-local"
                   name="startDate"
                   value={formData.start_date}
                   onChange={handleInputChange}
@@ -119,7 +119,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
               <Form.Group>
                 <label style={labelStyles}>Expiry Date</label>
                 <Form.Control
-                  type="datetime"
+                   type="datetime-local"
                   name="expiryDate"
                   value={formData.expiry_date}
                   onChange={handleInputChange}
