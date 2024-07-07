@@ -7,7 +7,7 @@ import './tableList.css';
 import ip_initials from './config'; // Import the ip_initials constant from config.js
 
 
-function TableList({ setSubscriptionCounts, showActions }) {
+function TableList({ setSubscriptionCounts, showActions, url }) {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -18,7 +18,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get(`${ip_initials}/api/v1/subscriptions`, {
+    axios.get(url, {
       headers: {
         "Authorization": `Bearer ${token}`, 
         "x-access-token": token
@@ -27,11 +27,12 @@ function TableList({ setSubscriptionCounts, showActions }) {
     .then(res => {
       const initialData = res.data.map((item, index) => ({
         ...item,
-        id: index + 1
+        subscription_id: index + 1
       }));
       setData(initialData);
       setFilteredData(initialData);
       updateSubscriptionCounts(initialData);
+      console.log("Initial Data", initialData);
     })
     .catch(error => {
       if (error.response.status === 401) {
@@ -80,6 +81,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
 
   const handleDelete = (id) => {
     const token = localStorage.getItem('token');
+    console.log(id);
     axios.delete(`${ip_initials}/api/v1/subscriptions/${id}`, {
       method: 'DELETE',
       headers: {
@@ -115,10 +117,24 @@ function TableList({ setSubscriptionCounts, showActions }) {
     }));
   };
 
+  const constructPayload = (row) => {
+    const payload = {...row};
+    console.log("Current Row", row);
+    const keysToDelete = ['id', 'start_date', 'subscription_id'];
+    for (const key of keysToDelete) {
+      delete payload[key];
+    }
+    console.log("Payload", payload);
+    return payload;
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    axios.put(`${ip_initials}/api/v1/subscriptions/${currentRow.id}`, currentRow, {
+    console.log(currentRow);
+    const payload = constructPayload(currentRow);
+    // console.log("Payload", payload);
+    axios.put(`${ip_initials}/api/v1/subscriptions/${currentRow.id}`, payload, {
       method: 'PUT',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -138,7 +154,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
   };
 
   const columns = [
-    { name: 'ID', selector: row => row.id, sortable: true },
+    { name: 'ID', selector: row => row.subscription_id, sortable: true },
     { name: 'Subscription Name', selector: row => row.subscription_name, sortable: true },
     { name: 'Start Date', selector: row => row.start_date, sortable: true },
     { name: 'Expiry Date', selector: row => row.expiry_date, sortable: true },

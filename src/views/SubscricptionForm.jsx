@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './subscriptionStyle.css';
 import AsyncSelect from 'react-select/async';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import ip_initials from './config'; // Import the ip_initials constant from config.js
 
 
@@ -18,16 +20,23 @@ function SubscriptionForm() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
-
   const [emailOptions, setEmailOptions] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     // Fetch email addresses once and store them in the local state
-    fetch(`${ip_initials}/api/v1/users/email`)
-      .then(response => response.json())
-      .then(data => {
-        const options = data.map(email => ({ value: email, label: email }));
-        setEmailOptions(options);
+    axios.get(`${ip_initials}/api/v1/users`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-access-token": token
+      }
+    })
+      .then(response => {
+        const usersArray = response.data;
+        const usersEmails = usersArray.map(item => item.email);
+        setEmailOptions(usersEmails);
+        console.log("Email options", usersEmails);
       })
       .catch(error => {
         console.error("Error fetching email addresses:", error);
