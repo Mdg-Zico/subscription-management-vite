@@ -55,6 +55,7 @@ const buttonStyles = {
 };
 
 function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
+  console.log(`Expiry Date: ${formData.expiry_date}; Start Date ${formData.start_date}`);
   return (
     <Modal
       show={show}

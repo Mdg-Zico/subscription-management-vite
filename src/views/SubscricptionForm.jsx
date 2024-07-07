@@ -111,6 +111,7 @@ function SubscriptionForm() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    console.log("VALUE", value);
     setFormData({
       ...formData,
       [name]: value
