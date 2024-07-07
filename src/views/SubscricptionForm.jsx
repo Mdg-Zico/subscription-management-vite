@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './subscriptionStyle.css';
 import AsyncSelect from 'react-select/async';
+import ip_initials from './config'; // Import the ip_initials constant from config.js
 
 
 function SubscriptionForm() {
@@ -21,7 +22,7 @@ function SubscriptionForm() {
 
   useEffect(() => {
     // Fetch email addresses once and store them in the local state
-    fetch('http://localhost:5000/api/v1/users/email')
+    fetch(`${ip_initials}/api/v1/users/email`)
       .then(response => response.json())
       .then(data => {
         const options = data.map(email => ({ value: email, label: email }));
@@ -48,7 +49,7 @@ function SubscriptionForm() {
     }
 
     setLoading(true);
-    const url = `http://localhost:5000/api/v1/subscriptions/${user.id}`;
+    const url = `${ip_initials}/api/v1/subscriptions/${user.id}`;
 
     const usersString = formData.users.map(emailObj => emailObj.value).join(', ');
 
