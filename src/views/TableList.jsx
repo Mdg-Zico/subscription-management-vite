@@ -81,6 +81,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
   const handleDelete = (id) => {
     const token = localStorage.getItem('token');
     axios.delete(`${ip_initials}/api/v1/subscriptions/${id}`, {
+      method: 'DELETE',
       headers: {
         "Authorization": `Bearer ${token}`,
         "x-access-token": token
@@ -118,6 +119,7 @@ function TableList({ setSubscriptionCounts, showActions }) {
     event.preventDefault();
     const token = localStorage.getItem('token');
     axios.put(`${ip_initials}/api/v1/subscriptions/${currentRow.id}`, currentRow, {
+      method: 'PUT',
       headers: {
         "Authorization": `Bearer ${token}`,
         "x-access-token": token
