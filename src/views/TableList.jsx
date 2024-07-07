@@ -7,6 +7,17 @@ import './tableList.css';
 import ip_initials from './config'; // Import the ip_initials constant from config.js
 
 
+const formatDateForInput = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
+
 function TableList({ setSubscriptionCounts, showActions, url }) {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
@@ -27,7 +38,9 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
     .then(res => {
       const initialData = res.data.map((item, index) => ({
         ...item,
-        subscription_id: index + 1
+        subscription_id: index + 1,
+        start_date: formatDateForInput(item.start_date),
+        expiry_date: formatDateForInput(item.expiry_date),
       }));
       setData(initialData);
       setFilteredData(initialData);
@@ -69,12 +82,22 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
 
   const handleView = (row) => {
     setCurrentRow(row);
+    setCurrentRow({
+      ...row,
+      start_date: formatDateForInput(row.start_date),
+      expiry_date: formatDateForInput(row.expiry_date),
+    });
     setIsEditing(false);
     setShowModal(true);
   };
 
   const handleEdit = (row) => {
     setCurrentRow(row);
+    setCurrentRow({
+      ...row,
+      start_date: formatDateForInput(row.start_date),
+      expiry_date: formatDateForInput(row.expiry_date),
+    });
     setIsEditing(true);
     setShowModal(true);
   };
