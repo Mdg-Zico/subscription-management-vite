@@ -56,7 +56,7 @@ function AppContent() {
       <Routes>
         <Route path="/login" element={<Login  />} />
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
         <Route path="/form" element={<SubscriptionForm />} />
         <Route path="/my_subscription" element={<MySubscription />} />
       </Routes>

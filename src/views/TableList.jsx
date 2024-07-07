@@ -4,72 +4,66 @@ import SubscriptionModal from './SubscriptionModal';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './tableList.css';
+import ip_initials from './config'; // Import the ip_initials constant from config.js
 
-function TableList({ setSubscriptionCounts, showActions, url }) {
-  let initialData = [{ id: 1, subscription_name: "Basic", startDate: "2023-01-01", expiryDate: "2024-01-01", status: "Active", subscription_cost: "#2,000" }];
+
+function TableList({ setSubscriptionCounts, showActions }) {
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentRow, setCurrentRow] = useState(null);
   const navigate = useNavigate();
-  console.log(initialData)
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.get(url,
-      {headers: {
-        "Authorization": `Bearer ${token}`, // mind the space before your token
+    axios.get(`${ip_initials}/api/v1/subscriptions`, {
+      headers: {
+        "Authorization": `Bearer ${token}`, 
         "x-access-token": token
-      }})
-    .then(res => {
-      console.log("Result data", res.data);
-      let counter = 1;
-      initialData = res.data;
-      for (let row of initialData) {
-        row['id'] = counter;
-        counter++;
-        
       }
-      
-      const counts = initialData.reduce(
-        (acc, item) => {
-          item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
-          return acc;
-        },
-        { Active: 0, Expired: 0 }
-      );
-      // console.log(counts);
-      setSubscriptionCounts(counts);
-      setFilteredData(initialData);
     })
-    .catch(
-      error => {
-        if (error.response.status === 401) {
-          navigate("/login")
-        }
+    .then(res => {
+      const initialData = res.data.map((item, index) => ({
+        ...item,
+        id: index + 1
+      }));
+      setData(initialData);
+      setFilteredData(initialData);
+      updateSubscriptionCounts(initialData);
+    })
+    .catch(error => {
+      if (error.response.status === 401) {
+        navigate("/login");
       }
-    )
-  }, [setSubscriptionCounts]);
-  console.log("Initial Data", initialData);
+    });
+  }, [setSubscriptionCounts, navigate]);
 
-  const handleSearch = event => {
+  const updateSubscriptionCounts = (data) => {
+    const counts = data.reduce(
+      (acc, item) => {
+        item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
+        return acc;
+      },
+      { Active: 0, Expired: 0 }
+    );
+    setSubscriptionCounts(counts);
+  };
+
+  const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearch(value);
 
-    const filtered = initialData.filter(item => {
-      return (
-        item.subscription_name.toLowerCase().includes(value) ||
-        item.start_date.toLowerCase().includes(value) ||
-        item.expiry_date.toLowerCase().includes(value) ||
-        item.subscription_status.toLowerCase().includes(value) ||
-        item.subscription_cost.toLowerCase().includes(value) ||
-        item.subscription_description.toLowerCase().includes(value)
-      );
-    });
-
+    const filtered = data.filter(item => (
+      item.subscription_name.toLowerCase().includes(value) ||
+      item.start_date.toLowerCase().includes(value) ||
+      item.expiry_date.toLowerCase().includes(value) ||
+      item.subscription_status.toLowerCase().includes(value) ||
+      item.subscription_cost.toLowerCase().includes(value) ||
+      item.subscription_description.toLowerCase().includes(value)
+    ));
     setFilteredData(filtered);
-    // console.log(filteredData);
-    
   };
 
   const handleView = (row) => {
@@ -85,23 +79,28 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
   };
 
   const handleDelete = (id) => {
-    axios.delete()
-    const updatedData = filteredData.filter(item => item.id !== id);
-    const reassignedData = updatedData.map((item, index) => ({
-      ...item,
-      id: index + 1
-    }));
-    setFilteredData(reassignedData);
-    const counts = reassignedData.reduce(
-      (acc, item) => {
-        item.subscription_status ? acc['Active'] += 1 : acc['Expired'] += 1;
-        return acc;
-      },
-      { Active: 0, Expired: 0 }
-    );
-    setSubscriptionCounts(counts);
+    const token = localStorage.getItem('token');
+    axios.delete(`${ip_initials}/api/v1/subscriptions/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-access-token": token
+      }
+    })
+    .then(() => {
+      const updatedData = filteredData.filter(item => item.id !== id);
+      const reassignedData = updatedData.map((item, index) => ({
+        ...item,
+        id: index + 1
+      }));
+      setData(reassignedData);
+      setFilteredData(reassignedData);
+      updateSubscriptionCounts(reassignedData);
+    })
+    .catch(error => {
+      console.error('There was an error deleting the subscription!', error);
+    });
   };
-  
+
   const handleClose = () => {
     setShowModal(false);
     setCurrentRow(null);
@@ -109,16 +108,31 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCurrentRow({
-      ...currentRow,
+    setCurrentRow(prevRow => ({
+      ...prevRow,
       [name]: value
-    });
+    }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setFilteredData(filteredData.map(item => (item.id === currentRow.id ? currentRow : item)));
-    handleClose();
+    const token = localStorage.getItem('token');
+    axios.put(`${ip_initials}/api/v1/subscriptions/${currentRow.id}`, currentRow, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-access-token": token
+      }
+    })
+    .then(() => {
+      const updatedData = filteredData.map(item => (item.id === currentRow.id ? currentRow : item));
+      setData(updatedData);
+      setFilteredData(updatedData);
+      updateSubscriptionCounts(updatedData);
+      handleClose();
+    })
+    .catch(error => {
+      console.error('There was an error updating the subscription!', error);
+    });
   };
 
   const columns = [
@@ -129,10 +143,10 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
     { name: 'Subscription Cost', selector: row => row.subscription_cost, sortable: true },
     { 
       name: 'Status', 
-      selector: row => row.status, 
+      selector: row => row.subscription_status, 
       sortable: true,
       cell: row => (
-        <span className={`status-badge ${row.subscription_status}`}>
+        <span className={`status-badge ${row.subscription_status ? 'active' : 'expired'}`}>
           {row.subscription_status ? 'Active' : 'Expired'}
         </span>
       ) 
