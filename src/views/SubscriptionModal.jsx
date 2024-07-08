@@ -1,5 +1,6 @@
-import React from 'react';
-import { Modal, Button, Form, Col, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap';
+import Select from 'react-select';
 
 const modalDialogStyles = {
   display: 'flex',
@@ -29,18 +30,21 @@ const headerStyles = {
 
 const closeButtonStyles = {
   color: '#fff',
-  fontSize: '1.5rem',
+  fontSize: '1.9rem',
   background: 'none',
   border: 'none',
   cursor: 'pointer',
-  marginTop: "-15px",
-  paddingTop: "0"
+  marginTop: "10px",
+  paddingTop: "0",
+  marginRight: "-40px"
 };
 
 const labelStyles = {
   color: '#012970',
   fontFamily: 'Poppins',
   fontWeight: '500',
+  marginBottom: '-10px',
+  marginTop: "10px"
 };
 
 const inputStyles = {
@@ -55,7 +59,34 @@ const buttonStyles = {
 };
 
 function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
-  console.log(`Expiry Date: ${formData.expiry_date}; Start Date ${formData.start_date}`);
+  const [alertVisible, setAlertVisible] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(e);
+    setAlertVisible(true);
+    setTimeout(() => {
+      setAlertVisible(false);
+      handleClose();
+    }, 3000); // Hide alert and close modal after 3 seconds
+  };
+
+  const emailOptions = [
+    { value: 'isaac.medugu@abujaelectricity.com', label: 'isaac.medugu@abujaelectricity.com' },
+    { value: 'justin.ebedi@abujaelectricity.com', label: 'justin.ebedi@abujaelectricity.com' },
+    { value: 'ibrahim.ali@abujaelectricity.com', label: 'ibrahim.ali@abujaelectricity.com' }
+  ];
+
+  const handleMultiSelectChange = (selectedOptions) => {
+    const selectedEmails = selectedOptions ? selectedOptions.map(option => option.value) : [];
+    handleInputChange({
+      target: {
+        name: 'users',
+        value: selectedEmails
+      }
+    });
+  };
+
   return (
     <Modal
       show={show}
@@ -65,15 +96,20 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
       style={modalDialogStyles}
     >
       <Modal.Header style={headerStyles}>
-        <Modal.Title style={{ color: "#fff", fontFamily: "Nunito", fontWeight: "700", marginTop: "0" }}>
+        <Modal.Title style={{ color: "#fff", fontFamily: "Nunito", fontWeight: "700" }}>
           {isEditing ? "Edit Subscription" : "View Subscription"}
         </Modal.Title>
         <button onClick={handleClose} style={closeButtonStyles}>&times;</button> {/* Custom close button */}
       </Modal.Header>
       <Modal.Body style={modalContentStyles}>
-        <Form onSubmit={handleSubmit}>
+        {alertVisible && (
+          <Alert variant="success">
+            Changes saved successfully!
+          </Alert>
+        )}
+        <Form onSubmit={onSubmit}>
           <Row>
-            <Col md={6}>
+            <Col md={12}>
               <Form.Group>
                 <label style={labelStyles}>Subscription Name</label>
                 <Form.Control
@@ -87,28 +123,29 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 />
               </Form.Group>
             </Col>
-            <Col md={6}>
+            <Col md={12}>
               <Form.Group>
                 <label style={labelStyles}>Stakeholder Emails</label>
-                <Form.Control
-                  placeholder="Emails"
-                  type="text"
-                  name="emails"
-                  value={formData.users}
-                  onChange={handleInputChange}
-                  disabled={!isEditing}
-                  style={inputStyles}
+                <Select
+                  isMulti
+                  name="users"
+                  options={emailOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  value={emailOptions.filter(option => formData.users.includes(option.value))}
+                  onChange={handleMultiSelectChange}
+                  isDisabled={!isEditing}
                 />
               </Form.Group>
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col md={12}>
               <Form.Group>
                 <label style={labelStyles}>Start Date</label>
                 <Form.Control
-                   type="datetime-local"
-                  name="startDate"
+                  type="datetime-local"
+                  name="start_date"
                   value={formData.start_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -116,12 +153,12 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 />
               </Form.Group>
             </Col>
-            <Col md={6}>
+            <Col md={12}>
               <Form.Group>
                 <label style={labelStyles}>Expiry Date</label>
                 <Form.Control
-                   type="datetime-local"
-                  name="expiryDate"
+                  type="datetime-local"
+                  name="expiry_date"
                   value={formData.expiry_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -137,7 +174,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <Form.Control
                   as="textarea"
                   rows="4"
-                  name="description"
+                  name="subscription_description"
                   value={formData.subscription_description}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -162,9 +199,22 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
 export default SubscriptionModal;
 
 
-// import React from 'react';
-// import { Modal, Button, Form, Col, Row } from 'react-bootstrap';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap';
 
 // const modalDialogStyles = {
 //   display: 'flex',
@@ -194,18 +244,21 @@ export default SubscriptionModal;
 
 // const closeButtonStyles = {
 //   color: '#fff',
-//   fontSize: '1.5rem',
+//   fontSize: '1.9rem',
 //   background: 'none',
 //   border: 'none',
 //   cursor: 'pointer',
-//   marginTop: "-15px",
-//   paddingTop: "0"
+//   marginTop: "10px",
+//   paddingTop: "0",
+//   marginRight: "-40px"
 // };
 
 // const labelStyles = {
 //   color: '#012970',
 //   fontFamily: 'Poppins',
 //   fontWeight: '500',
+//   marginBottom: '-10px',
+//   marginTop: "10px"
 // };
 
 // const inputStyles = {
@@ -220,7 +273,18 @@ export default SubscriptionModal;
 // };
 
 // function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
-//   console.log(formData.expiry_date);
+//   const [alertVisible, setAlertVisible] = useState(false);
+
+//   const onSubmit = (e) => {
+//     e.preventDefault();
+//     handleSubmit(e);
+//     setAlertVisible(true);
+//     setTimeout(() => {
+//       setAlertVisible(false);
+//       handleClose();
+//     }, 3000); // Hide alert and close modal after 3 seconds
+//   };
+
 //   return (
 //     <Modal
 //       show={show}
@@ -230,15 +294,20 @@ export default SubscriptionModal;
 //       style={modalDialogStyles}
 //     >
 //       <Modal.Header style={headerStyles}>
-//         <Modal.Title style={{ color: "#fff", fontFamily: "Nunito", fontWeight: "700", marginTop: "0" }}>
+//         <Modal.Title style={{ color: "#fff", fontFamily: "Nunito", fontWeight: "700" }}>
 //           {isEditing ? "Edit Subscription" : "View Subscription"}
 //         </Modal.Title>
 //         <button onClick={handleClose} style={closeButtonStyles}>&times;</button> {/* Custom close button */}
 //       </Modal.Header>
 //       <Modal.Body style={modalContentStyles}>
-//         <Form onSubmit={handleSubmit}>
+//         {alertVisible && (
+//           <Alert variant="success">
+//             Changes saved successfully!
+//           </Alert>
+//         )}
+//         <Form onSubmit={onSubmit}>
 //           <Row>
-//             <Col md={6}>
+//             <Col md={12}>
 //               <Form.Group>
 //                 <label style={labelStyles}>Subscription Name</label>
 //                 <Form.Control
@@ -252,28 +321,29 @@ export default SubscriptionModal;
 //                 />
 //               </Form.Group>
 //             </Col>
-//             <Col md={6}>
+//             <Col md={12}>
 //               <Form.Group>
 //                 <label style={labelStyles}>Stakeholder Emails</label>
-//                 <Form.Control
+//                 <Form.Control 
 //                   placeholder="Emails"
 //                   type="text"
-//                   name="emails"
+//                   name="users"
 //                   value={formData.users}
 //                   onChange={handleInputChange}
 //                   disabled={!isEditing}
 //                   style={inputStyles}
 //                 />
+              
 //               </Form.Group>
 //             </Col>
 //           </Row>
 //           <Row>
-//             <Col md={6}>
+//             <Col md={12}>
 //               <Form.Group>
 //                 <label style={labelStyles}>Start Date</label>
 //                 <Form.Control
-//                   type="datetime"
-//                   name="startDate"
+//                   type="datetime-local"
+//                   name="start_date"
 //                   value={formData.start_date}
 //                   onChange={handleInputChange}
 //                   disabled={!isEditing}
@@ -281,12 +351,12 @@ export default SubscriptionModal;
 //                 />
 //               </Form.Group>
 //             </Col>
-//             <Col md={6}>
+//             <Col md={12}>
 //               <Form.Group>
 //                 <label style={labelStyles}>Expiry Date</label>
 //                 <Form.Control
-//                   type="datetime"
-//                   name="expiryDate"
+//                   type="datetime-local"
+//                   name="expiry_date"
 //                   value={formData.expiry_date}
 //                   onChange={handleInputChange}
 //                   disabled={!isEditing}
@@ -302,7 +372,7 @@ export default SubscriptionModal;
 //                 <Form.Control
 //                   as="textarea"
 //                   rows="4"
-//                   name="description"
+//                   name="subscription_description"
 //                   value={formData.subscription_description}
 //                   onChange={handleInputChange}
 //                   disabled={!isEditing}

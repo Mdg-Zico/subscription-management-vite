@@ -45,14 +45,16 @@
     background-color: green;
   }
   
-  .status-badge.inactive {
-    background-color: gray;
+  .status-badge.active {
+    background-color: green;
   }
   
   .status-badge.false {
     background-color: red;
   }
-  
+  .status-badge.inactive {
+    background-color: red;
+  }
   .search-input {
     border-color: grey;
     box-shadow: 0 0 5px rgba(30, 58, 95, 0.5);

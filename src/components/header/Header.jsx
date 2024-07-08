@@ -29,11 +29,11 @@ function Header() {
           </Dropdown.Toggle>
 
           <Dropdown.Menu style={{ maxWidth: '200px' }}>
-            <Dropdown.Item href="#pablo" onClick={(e) => e.preventDefault()}>
+            {/* <Dropdown.Item href="#pablo" onClick={(e) => e.preventDefault()}>
               My Profile
             </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item href="/logout" onClick={(e) => e.preventDefault()}>
+            <Dropdown.Divider /> */}
+            <Dropdown.Item href="/login" >
               Log Out
             </Dropdown.Item>
           </Dropdown.Menu>

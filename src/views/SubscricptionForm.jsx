@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './subscriptionStyle.css';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ip_initials from './config'; // Import the ip_initials constant from config.js
@@ -9,7 +9,7 @@ import ip_initials from './config'; // Import the ip_initials constant from conf
 function SubscriptionForm() {
   const [formData, setFormData] = useState({
     subscription_name: "",
-    users: "", // Single input for multiple emails
+    users: [], // Single input for multiple emails
     start_date: "",
     expiry_date: "",
     subscription_description: "",
@@ -22,9 +22,7 @@ function SubscriptionForm() {
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [emailOptions, setEmailOptions] = useState([]);
   const token = localStorage.getItem('token');
-
   useEffect(() => {
-    // Fetch email addresses once and store them in the local state
     axios.get(`${ip_initials}/api/v1/users`, {
       method: 'GET',
       headers: {
@@ -34,13 +32,21 @@ function SubscriptionForm() {
     })
       .then(response => {
         const usersArray = response.data;
-        const usersEmails = usersArray.map(item => item.email);
+        const usersEmails = usersArray.map(item => {
+          return {
+            value: item.email,
+            label: item.email,
+          }
+        });
+        console.log("User emails", usersEmails);
         setEmailOptions(usersEmails);
-        console.log("Email options", usersEmails);
       })
       .catch(error => {
+        if (error.response.status === 401) {
+          navigate('/my_subscription');
+        }
         console.error("Error fetching email addresses:", error);
-      });
+    });
   }, []);
 
   const handleSubmit = (event) => {
@@ -59,13 +65,13 @@ function SubscriptionForm() {
     }
 
     setLoading(true);
-    const url = `${ip_initials}/api/v1/subscriptions/${user.id}`;
+    const url = `${ip_initials}/api/v1/subscriptions/`;
 
-    const usersString = formData.users.map(emailObj => emailObj.value).join(', ');
+    const usersArray = formData.users.map(emailObj => emailObj.value);
 
     const payload = {
       ...formData,
-      users: usersString
+      users: usersArray
     };
 
     console.log("Form Data:", payload);
@@ -74,29 +80,25 @@ function SubscriptionForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(payload)
     })
       .then(response => response.json())
       .then(data => {
         console.log("Response Data:", data);
-        if (data.status === "success") {
-          setSubmissionStatus({ message: "Form submitted successfully", type: "success" });
-          setFormData({
-            subscription_name: "",
-            users: [],
-            start_date: "",
-            expiry_date: "",
-            subscription_description: "",
-            subscription_cost: ""
-          });
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        } else {
-          setSubmissionStatus({ message: "Error on Submission", type: "error" });
-        }
+        setSubmissionStatus({ message: "Form submitted successfully", type: "success" });
+        setFormData({
+          subscription_name: "",
+          users: [],
+          start_date: "",
+          expiry_date: "",
+          subscription_description: "",
+          subscription_cost: ""
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
         scrollToTop();
       })
       .catch(error => {
@@ -125,21 +127,15 @@ function SubscriptionForm() {
     });
   };
 
-  const loadOptions = (inputValue, callback) => {
-    const filteredOptions = emailOptions.filter(option =>
-      option.label.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    callback(filteredOptions);
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <>
+    {/* className={`alert alert-${submissionStatus.type} alert-dismissible fade show alert-div` } role="alert" */}
       {submissionStatus && (
-        <div className={`alert alert-${submissionStatus.type} alert-dismissible fade show`} role="alert">
+        <div > 
           {submissionStatus.message}
           <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={() => setSubmissionStatus(null)}>
             <span aria-hidden="true">&times;</span>
@@ -171,11 +167,9 @@ function SubscriptionForm() {
                       <div className="form-group flex-input-sub-divs" >
                         <label style={{ fontFamily: "Roboto, sans-serif" }}>Stakeholder Email Addresses</label>
                         {/* // (comma-separated) */}
-                        <AsyncSelect className="async"
+                        <Select className="drop-down"
                           isMulti
-                          cacheOptions
-                          defaultOptions
-                          loadOptions={loadOptions}
+                          options={emailOptions}
                           onChange={handleUsersChange}
                           value={formData.users}
                           styles={{
