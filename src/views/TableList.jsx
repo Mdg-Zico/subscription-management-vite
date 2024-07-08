@@ -139,10 +139,13 @@ function TableList({ setSubscriptionCounts, showActions, url }) {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCurrentRow(prevRow => ({
+    console.log(`${name}: ${value}`);
+    setCurrentRow(prevRow => (
+      {
       ...prevRow,
       [name]: value
     }));
+    console.log("Current row", currentRow);
   };
 
   const constructPayload = (row) => {
