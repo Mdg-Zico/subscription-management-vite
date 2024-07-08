@@ -49,7 +49,7 @@ function Login() {
       // setTimeout(() => {localStorage.removeItem('user')}, (1000 * 60 * 60));
       setShowSuccessModal(true);
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/my_subscription");
       }, 2000); // Redirect after 2 seconds
     } catch (error) {
       if (error.message === 'Incorrect Username/Password') {

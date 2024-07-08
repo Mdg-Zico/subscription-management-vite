@@ -55,7 +55,6 @@ const buttonStyles = {
 };
 
 function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
-  console.log(`Expiry Date: ${formData.expiry_date}; Start Date ${formData.start_date}`);
   return (
     <Modal
       show={show}
@@ -93,7 +92,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <Form.Control
                   placeholder="Emails"
                   type="text"
-                  name="emails"
+                  name="users"
                   value={formData.users}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -108,7 +107,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <label style={labelStyles}>Start Date</label>
                 <Form.Control
                    type="datetime-local"
-                  name="startDate"
+                  name="start_date"
                   value={formData.start_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -121,7 +120,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <label style={labelStyles}>Expiry Date</label>
                 <Form.Control
                    type="datetime-local"
-                  name="expiryDate"
+                  name="expiry_date"
                   value={formData.expiry_date}
                   onChange={handleInputChange}
                   disabled={!isEditing}
@@ -137,7 +136,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                 <Form.Control
                   as="textarea"
                   rows="4"
-                  name="description"
+                  name="subscription_description"
                   value={formData.subscription_description}
                   onChange={handleInputChange}
                   disabled={!isEditing}
