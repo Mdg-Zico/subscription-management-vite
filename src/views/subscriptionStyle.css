@@ -117,6 +117,9 @@ button {
 
 /* Responsive adjustments */
 @media (max-width: 580px) {
+  .modal-view{
+    z-index: 2000;
+  }
   .container {
     margin-left: 0;
     width: 100%;
@@ -133,6 +136,7 @@ button {
 
   .toggle-button {
     display: flex;
+    z-index: 1000;
   }
   .form-group input{
     
@@ -197,3 +201,4 @@ button {
   
   
 }
+

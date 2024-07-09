@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import ip_initials from './config';
 import { Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap';
 import Select from 'react-select';
+import './selectDropStyles.css'
 
 const modalDialogStyles = {
   display: 'flex',
@@ -58,8 +61,36 @@ const buttonStyles = {
   color: "white"
 };
 
-function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleSubmit, isEditing }) {
+function SubscriptionModal({ show, handleClose, formData, handleInputChange, handleUsersChange, handleSubmit, isEditing }) {
   const [alertVisible, setAlertVisible] = useState(false);
+  const [emailOptions, setEmailOptions] = useState([]);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    axios.get(`${ip_initials}/api/v1/users`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-access-token": token
+      }
+    })
+      .then(response => {
+        const usersArray = response.data;
+        const usersEmails = usersArray.map(item => {
+          return {
+            value: item.email,
+            label: item.email,
+          }
+        });
+        console.log("User emails", usersEmails);
+        setEmailOptions(usersEmails);
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          navigate('/my_subscription');
+        }
+        console.error("Error fetching email addresses:", error);
+    });
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -69,22 +100,6 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
       setAlertVisible(false);
       handleClose();
     }, 3000); // Hide alert and close modal after 3 seconds
-  };
-
-  const emailOptions = [
-    { value: 'isaac.medugu@abujaelectricity.com', label: 'isaac.medugu@abujaelectricity.com' },
-    { value: 'justin.ebedi@abujaelectricity.com', label: 'justin.ebedi@abujaelectricity.com' },
-    { value: 'ibrahim.ali@abujaelectricity.com', label: 'ibrahim.ali@abujaelectricity.com' }
-  ];
-
-  const handleMultiSelectChange = (selectedOptions) => {
-    const selectedEmails = selectedOptions ? selectedOptions.map(option => option.value) : [];
-    handleInputChange({
-      target: {
-        name: 'users',
-        value: selectedEmails
-      }
-    });
   };
 
   return (
@@ -133,7 +148,7 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
                   className="basic-multi-select"
                   classNamePrefix="select"
                   value={emailOptions.filter(option => formData.users.includes(option.value))}
-                  onChange={handleMultiSelectChange}
+                  onChange={handleUsersChange}
                   isDisabled={!isEditing}
                 />
               </Form.Group>

@@ -96,9 +96,9 @@ function SubscriptionForm() {
           subscription_description: "",
           subscription_cost: ""
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
         scrollToTop();
       })
       .catch(error => {
@@ -125,6 +125,7 @@ function SubscriptionForm() {
       ...formData,
       users: selectedOptions
     });
+    console.log(selectedOptions);
   };
 
   const scrollToTop = () => {

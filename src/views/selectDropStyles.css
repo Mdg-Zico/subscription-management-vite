@@ -1,0 +1,25 @@
+.custom-multi-select .select__multi-value {
+    display: inline-flex;
+    align-items: center;
+    margin: 2px;
+    padding: 2px 5px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+  }
+  
+  .custom-multi-select .select__multi-value__label {
+    font-size: 14px;
+    color: #495057;
+  }
+  
+  .custom-multi-select .select__multi-value__remove {
+    cursor: pointer;
+    padding-left: 5px;
+  }
+  
+  .custom-multi-select .select__control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
