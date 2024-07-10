@@ -19,7 +19,7 @@ body {
 }
 .card {
   margin-top: 20px;
-  width: 110%;
+  width: 100%;
 
 }
 
@@ -38,8 +38,11 @@ body {
 .card-body {
   padding: 20px;
   width: 100%;
-}
 
+}
+.card-body-style{
+  width: 200%;
+}
 .form-group {
 
   margin-bottom: 1rem;
@@ -117,9 +120,6 @@ button {
 
 /* Responsive adjustments */
 @media (max-width: 580px) {
-  .modal-view{
-    z-index: 2000;
-  }
   .container {
     margin-left: 0;
     width: 100%;
@@ -136,7 +136,6 @@ button {
 
   .toggle-button {
     display: flex;
-    z-index: 1000;
   }
   .form-group input{
     
@@ -177,6 +176,12 @@ button {
   .form-body{
     margin-top: -400px;
   }
+ 
+}
+@media(min-width: 1024px){
+  .col-12{
+    margin-left: 100px
+  }
 }
 .flex-input-divs{
   display: flex;
@@ -190,7 +195,15 @@ button {
   .flex-input-divs,
   .flex-input-sub-divs {
     display: block; /* This will stack the inputs on individual lines */
+   
   }
+  /* .card-body-style, .card-header{
+    margin-left: 40px;
+  } */
+  .col-12{
+    margin-left: 120px
+  }
+
 }
 
 .async{
@@ -201,4 +214,3 @@ button {
   
   
 }
-

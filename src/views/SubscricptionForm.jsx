@@ -96,9 +96,9 @@ function SubscriptionForm() {
           subscription_description: "",
           subscription_cost: ""
         });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
         scrollToTop();
       })
       .catch(error => {
@@ -144,14 +144,14 @@ function SubscriptionForm() {
         </div>
       )}
       <div className="form-main-content" >
-        <div className="container form-body" style={{ marginLeft: "100px", width: "90%", textAlign: "left" }}>
+        <div className="container form-body" style={{ marginLeft: "100px", width: "80%", textAlign: "left" }}>
           <div className="row justify-content-center">
             <div className="col-12">
               <div className="card">
                 <div className="card-header" style={{ backgroundColor: "#012970", color: "white", fontFamily: "Roboto, sans-serif", padding: "15px 20px" }}>
                   <h4 className="card-title" style={{ color: "white", margin: "0" }}>Subscription Form</h4>
                 </div>
-                <div className="card-body">
+                <div className="card-body card-body-style" style={{width: "100%"}}>
                   <form onSubmit={handleSubmit}>
                     <div className="flex-input-divs">
                       <div className="form-group flex-input-sub-divs" >
