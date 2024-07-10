@@ -129,6 +129,8 @@ body {
 .card-footer {
   background-color: white !important;
   color: "#012970";
+  margin-right: 60px;
+  width: 105%;
 }
 
 .left-text {
