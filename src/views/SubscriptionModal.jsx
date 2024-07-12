@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ip_initials from './config';
-import { Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap';
+import { Modal, Button, Form, Col, Row, Alert, FormControl } from 'react-bootstrap';
 import Select from 'react-select';
 import './selectDropStyles.css'
 
@@ -182,6 +182,23 @@ function SubscriptionModal({ show, handleClose, formData, handleInputChange, han
               </Form.Group>
             </Col>
           </Row>
+
+          <Row>
+            <Col md={12}>
+              <Form.Group>
+                <label style={labelStyles}>Subscription Cost</label>
+                <FormControl
+                  type='number'
+                  name='subscription_cost'
+                  value={formData.subscription_cost}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  style={inputStyles}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
           <Row>
             <Col md={12}>
               <Form.Group>

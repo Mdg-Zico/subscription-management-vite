@@ -53,6 +53,10 @@ body {
 
 /* Set height for AsyncSelect and textarea */
 .css-13cymwt-control,
+.css-1pahdxg-control {
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+.css-13cymwt-control,
 textarea, input {
   height: 45px; /* Adjust this value as needed */
 }
