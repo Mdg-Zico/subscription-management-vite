@@ -17,6 +17,8 @@ function SubscriptionForm() {
 
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
+  // Ensure user and user.email are defined
+  const userEmail = user ? user.email : 'Guest';
   const [loading, setLoading] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [emailOptions, setEmailOptions] = useState([]);
@@ -32,14 +34,21 @@ function SubscriptionForm() {
     })
       .then(response => {
         const usersArray = response.data;
-        const usersEmails = usersArray.map(item => {
+        const usersEmails = usersArray
+        .filter(item => item.email !== userEmail)
+        .map(item => {
+          
           return {
+            
             value: item.email,
             label: item.email,
           }
         });
+       
         console.log("User emails", usersEmails);
         setEmailOptions(usersEmails);
+        
+       
       })
       .catch(error => {
         if (error.response.status === 401) {
@@ -96,10 +105,13 @@ function SubscriptionForm() {
           subscription_description: "",
           subscription_cost: ""
         });
+       
         setTimeout(() => {
-          window.location.reload();
+          navigate('/my_subscription')
         }, 2000);
         scrollToTop();
+        
+        
       })
       .catch(error => {
         console.error("Error:", error);
@@ -187,6 +199,7 @@ function SubscriptionForm() {
                           onChange={handleUsersChange}
                           value={formData.users}
                           styles={customStyles}
+                         
                         />
                       </div>
                     </div>
