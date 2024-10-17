@@ -1,6 +1,11 @@
 AEDC Subscription Management Tracker
 
 Overview
+![Screenshot (103)](https://github.com/user-attachments/assets/81076912-8d4f-4b39-afc2-f1a017fe7c3e)
+The Login Page
+
+![Screenshot (78)](https://github.com/user-attachments/assets/c58f70e7-2955-4e59-8c07-a2333befd05d)
+The Subscription Form
 
 The AEDC Subscription Management Tracker is a web-based platform designed to manage and monitor company-wide subscriptions such as dedicated internet service plans, domain name renewals, and other critical service contracts. The application streamlines subscription management by providing real-time tracking from the start date of a subscription until its expiration. It also automates email notifications to alert stakeholders as renewal deadlines approach.
 
