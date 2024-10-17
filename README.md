@@ -30,6 +30,9 @@ Expired subscriptions are marked in red, indicating immediate action is required
 
 Dashboard Interface:
 
+![Screenshot (104)](https://github.com/user-attachments/assets/79da2cb9-70d0-418e-a04e-3af7efa5d565)
+Dashboard
+
 All subscriptions are presented on a user-friendly dashboard, providing a clear visual indicator of their current status. Users can filter or search for specific subscriptions.
 Mail Service Integration:
 
